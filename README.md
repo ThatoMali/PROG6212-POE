@@ -1,10 +1,10 @@
 # Contract Monthly Claim System - PROG6212 POE
 
-## 📋 Project Overview
+##  Project Overview
 
 This is a **non-functional prototype** of a Contract Monthly Claim System developed as part of the PROG6212 Portfolio of Evidence (POE). The system is designed to allow lecturers to submit monthly claims, with programme coordinators and academic managers able to verify and approve these claims through a transparent workflow.
 
-## 🎯 System Features
+##  System Features
 
 - **Role-based Access Control**: Three user roles with different permissions
 - **Claim Submission**: Lecturers can submit claims with supporting documents
@@ -12,13 +12,13 @@ This is a **non-functional prototype** of a Contract Monthly Claim System develo
 - **Status Tracking**: Transparent tracking of claim status throughout the process
 - **Document Management**: Support for uploading and managing supporting documents
 
-## 👥 User Roles
+##  User Roles
 
 1. **Lecturer**: Can submit claims and track their status
 2. **Program Coordinator**: Can review and approve/reject claims
 3. **Academic Manager**: Final approval authority for claims
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 - **Framework**: ASP.NET Core MVC
 - **Frontend**: HTML5, CSS3, Bootstrap 5, JavaScript
@@ -26,7 +26,7 @@ This is a **non-functional prototype** of a Contract Monthly Claim System develo
 - **Database**: SQL Server (conceptual design only - non-functional prototype)
 - **Architecture**: MVC Pattern
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 PROG6212 POE/
@@ -62,7 +62,7 @@ PROG6212 POE/
 └── PROG6212 POE.csproj  # Project configuration
 ```
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -98,7 +98,7 @@ PROG6212 POE/
 
 ## 🔧 Important Notes
 
-### ⚠️ Non-Functional Prototype
+###  Non-Functional Prototype
 This is a **visual prototype only** with the following limitations:
 - No database connectivity
 - No authentication/authorization implementation
@@ -106,19 +106,19 @@ This is a **visual prototype only** with the following limitations:
 - Sample hardcoded data for demonstration purposes
 - Forms submit but don't actually process data
 
-### 🎭 Login Credentials
+###  Login Credentials
 Since this is a non-functional prototype, you can select any role from the dropdown:
 - **Username**: Any text
 - **Password**: Any text
 - **Role**: Select from dropdown (Lecturer/Program Coordinator/Academic Manager)
 
-### 📊 Sample Data
+###  Sample Data
 The application uses hardcoded sample data including:
 - 4 sample claims with different statuses
 - Dashboard statistics (12 total claims, 3 pending, 7 approved)
 - User role-based UI changes
 
-## 🗂️ Key Files
+##  Key Files
 
 ### Models
 - **UserRole.cs**: Enum defining user roles
@@ -137,7 +137,7 @@ The application uses hardcoded sample data including:
 - **Submit.cshtml**: Claim submission form
 - **Index.cshtml**: Claims listing page
 
-## 📋 UML Class Diagram
+##  UML Class Diagram
 
 The system includes a comprehensive UML class diagram showing:
 - **Inheritance relationships** between User and role-specific classes
@@ -145,7 +145,7 @@ The system includes a comprehensive UML class diagram showing:
 - **Association relationships** between Claim, Document, Approval, and Notification
 - **Database schema representation** with foreign key relationships
 
-## 🎨 UI Features
+##  UI Features
 
 - **Responsive Design**: Bootstrap 5 based responsive layout
 - **Role-based UI**: Different navigation options based on user role
@@ -153,7 +153,7 @@ The system includes a comprehensive UML class diagram showing:
 - **Status Indicators**: Color-coded badges for claim status
 - **File Upload**: Support document upload interface
 
-## 🔄 Workflow
+##  Workflow
 
 1. **Login** → Select role from dropdown
 2. **Dashboard** → View statistics and recent claims
@@ -161,7 +161,7 @@ The system includes a comprehensive UML class diagram showing:
 4. **My Claims** → View all claims with status tracking
 5. **View Details** → Examine individual claim details
 
-## 📝 Future Enhancements
+##  Future Enhancements
 
 For a functional implementation, the following would be needed:
 - Database integration with Entity Framework
@@ -172,11 +172,11 @@ For a functional implementation, the following would be needed:
 - Reporting and analytics
 - Admin panel for user management
 
-## 📄 License
+##  License
 
 This project is created for educational purposes as part of the PROG6212 POE requirements.
 
-## 👨‍💻 Developer
+##  Developer
 
 - **Student**: Moneri MALI
 - **Student ID**: ST10447949
