@@ -1,0 +1,99 @@
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.AssemblyInfoInputs.cache
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.AssemblyInfo.cs
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.csproj.CoreCompileInputs.cache
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.RazorAssemblyInfo.cache
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.RazorAssemblyInfo.cs
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.sourcelink.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\appsettings.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\PROG6212 POE.staticwebassets.runtime.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\PROG6212 POE.staticwebassets.endpoints.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\PROG6212 POE.exe
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\PROG6212 POE.deps.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\PROG6212 POE.runtimeconfig.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\PROG6212 POE.dll
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\bin\Debug\net9.0\PROG6212 POE.pdb
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\scopedcss\bundle\PROG6212 POE.styles.css
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\scopedcss\projectbundle\PROG6212 POE.bundle.scp.css
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\xitmuaj1pn-j4zi5qpxqr.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\n0o5ujkcqh-61n19gt1b8.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\6jq184u30w-xtxxf3hu2r.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\d1zw237s9m-bqjiyaj88i.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\mlnjgf0u72-c2jlpeoesf.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\jco8cjmy8f-erw9l3u2r3.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\nnez4zh54i-aexeepp0ev.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\bil9qrs3c6-d7shbmvgxk.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\5hzoq2skca-ausgxo2sd3.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\808g625fs1-k8d9w2qqmf.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\m1boizzaoe-cosvhxvwiu.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\ld2tvcc3ge-ub07r2b239.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\8ydp6holkx-fvhpjtyr6v.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\v83k7hfrah-b7pk76d08c.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\saq2j9l7fc-fsbi9cje9m.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\u144tdd3lm-rzd6atqjts.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\opuhovklrw-ee0r1s7dh0.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\b1omplqmhc-dxx9fxp4il.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\8c1dyivcta-jd9uben2k1.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\on3csyo96g-khv3u5hwcm.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\8h4sw20opz-r4e9w2rdcm.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\dtrqtwl9cs-lcd1t2u6c8.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\gc3lsexpyv-c2oey78nd0.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\mmsm02k3v6-tdbxkamptv.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\u5bzyc75ox-j5mq2jizvt.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\j2krk7cu3q-06098lyss8.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\uuhzeyms2f-nvvlpmu67g.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\wwsfowcal5-s35ty4nyc5.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\yscc4kxp23-pj5nd1wqec.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\sh2to0bt93-46ein0sx1k.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\1mvr51oiw6-v0zj4ognzu.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\rkhojr44i6-37tfw0ft22.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\zv3j42aetb-hrwsygsryq.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\76v1eredbr-pk9g2wxc8p.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\rxwt782yk9-ft3s53vfgj.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\878r12g1gr-6cfz1n2cew.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\a11t406f5f-6pdc2jztkx.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\2eory11eaz-493y06b0oq.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\5bwt96jci3-iovd86k7lj.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\mdvs8lp3om-vr1egmr9el.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\tuxondxg84-kbrnm935zg.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\zkq8oi0zc4-jj8uyg4cgr.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\fj0o7snwbk-y7v9cxd14o.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\i5y8bxgdop-notf2xhcfb.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\ooxpypb1o2-h1s4sie4z3.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\67huf0lz0w-63fj8s7r0e.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\61qz8lomee-0j3bgjxly4.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\f6lxzvodf0-47otxtyo56.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\tpnaf0e3wf-4v8eqarkd7.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\72g4wvos30-356vix0kms.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\5aydcmxp42-83jwlth58m.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\wtmr1ddcqw-mrlpezrjn3.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\gwnx5s4lgc-lzl9nlhx6b.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\bjni803dqk-ag7o75518u.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\ds43y3oxd2-x0q3zqp4vz.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\omy51sr46p-0i3buxo5is.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\1h4s8ra0x1-o1o13a6vjx.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\m5vc4ues09-ttgo8qnofa.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\gzwn0lyy7a-2z0ns9nrw6.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\58utj7cxx7-muycvpuwrr.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\bf51tf6s52-87fc7y1x7t.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\o5z0czdxtd-mlv21k5csn.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\m37swk9n32-b730m20f2e.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\compressed\3g3kurcooc-b730m20f2e.gz
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets\msbuild.PROG6212 POE.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets\msbuild.PROG6212 POE.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets\msbuild.build.PROG6212 POE.props
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.PROG6212 POE.props
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.PROG6212 POE.props
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets.pack.json
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.dll
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\refint\PROG6212 POE.dll
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.pdb
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\PROG6212 POE.genruntimeconfig.cache
+C:\Users\lab_services_student\Desktop\part-1-poe-ThatoMali\PROG6212 POE\obj\Debug\net9.0\ref\PROG6212 POE.dll

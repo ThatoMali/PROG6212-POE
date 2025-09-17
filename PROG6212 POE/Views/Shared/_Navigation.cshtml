@@ -1,0 +1,21 @@
+﻿@using ContractMonthlyClaimSystem.Models
+@{
+    var userRole = Context.Session.GetString("UserRole") != null ?
+        (UserRole)Enum.Parse(typeof(UserRole), Context.Session.GetString("UserRole")) :
+        UserRole.Lecturer;
+}
+
+<ul class="navbar-nav flex-grow-1">
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+    </li>
+    @if (userRole == UserRole.Lecturer)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Claims" asp-action="Submit">Submit Claim</a>
+        </li>
+    }
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Claims" asp-action="Index">My Claims</a>
+    </li>
+</ul>

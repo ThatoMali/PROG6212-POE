@@ -1,0 +1,89 @@
+﻿@using ContractMonthlyClaimSystem.Models
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row mb-4">
+    <div class="col">
+        <h1>Dashboard</h1>
+        <p class="lead">Welcome, @Model.UserRole.ToString()</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Total Claims</h5>
+                <h2 class="card-text">@Model.TotalClaims</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Pending Approval</h5>
+                <h2 class="card-text">@Model.PendingApproval</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Approved</h5>
+                <h2 class="card-text">@Model.Approved</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Recent Claims</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var claim in Model.RecentClaims)
+                            {
+                                <tr>
+                                    <td>@claim.Title</td>
+                                    <td>@claim.Date.ToString("dd MMM yyyy")</td>
+                                    <td>@claim.Amount.ToString("C")</td>
+                                    <td>
+                                        <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetStatusBadgeClass(string status)
+    {
+        return status.ToLower() switch
+        {
+            "approved" => "bg-success",
+            "pending" => "bg-warning",
+            "rejected" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}
