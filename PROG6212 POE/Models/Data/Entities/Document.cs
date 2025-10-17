@@ -1,12 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PROG6212_POE.Models.Data.Entities
 {
-    public class Document : Controller
+    public class Document
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string FileName { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string ContentType { get; set; }
+
+        public long FileSize { get; set; }
+
+        public byte[] FileData { get; set; }
+
+        public DateTime UploadDate { get; set; } = DateTime.Now;
+
+        // Foreign key
+        public int ClaimId { get; set; }
+        public Claim Claim { get; set; }
     }
 }
