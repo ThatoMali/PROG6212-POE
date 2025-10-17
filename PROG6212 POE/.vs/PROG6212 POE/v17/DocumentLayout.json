@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\models\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:models\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\models\\data\\entities\\claim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:models\\data\\entities\\claim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\models\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:models\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\models\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:models\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -53,34 +53,12 @@
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Manage.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
-              "RelativeDocumentMoniker": "Views\\Claims\\Manage.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
-              "RelativeToolTip": "Views\\Claims\\Manage.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-17T12:43:39.392Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FileService.cs",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\FileService.cs",
-              "RelativeDocumentMoniker": "Services\\FileService.cs",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\FileService.cs",
-              "RelativeToolTip": "Services\\FileService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T12:41:38.313Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ClaimService.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\ClaimService.cs",
               "RelativeDocumentMoniker": "Services\\ClaimService.cs",
@@ -88,12 +66,11 @@
               "RelativeToolTip": "Services\\ClaimService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T12:41:12.069Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T12:41:12.069Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IClaimService.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\IClaimService.cs",
               "RelativeDocumentMoniker": "Services\\IClaimService.cs",
@@ -101,12 +78,11 @@
               "RelativeToolTip": "Services\\IClaimService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T12:40:33.982Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T12:40:33.982Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Document.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Models\\Data\\Entities\\Document.cs",
               "RelativeDocumentMoniker": "Models\\Data\\Entities\\Document.cs",
@@ -114,12 +90,11 @@
               "RelativeToolTip": "Models\\Data\\Entities\\Document.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T12:38:09.309Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T12:38:09.309Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Models\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Models\\Data\\ApplicationDbContext.cs",
@@ -127,12 +102,11 @@
               "RelativeToolTip": "Models\\Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T16:01:10.727Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T16:01:10.727Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Claim.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Models\\Data\\Entities\\Claim.cs",
               "RelativeDocumentMoniker": "Models\\Data\\Entities\\Claim.cs",
@@ -144,12 +118,45 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Models\\Data\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Models\\Data\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Models\\Data\\Entities\\User.cs",
+              "RelativeToolTip": "Models\\Data\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T12:57:23.275Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
+              "Title": "FileService.cs",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\FileService.cs",
+              "RelativeDocumentMoniker": "Services\\FileService.cs",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\FileService.cs",
+              "RelativeToolTip": "Services\\FileService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T12:41:38.313Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Manage.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
+              "RelativeDocumentMoniker": "Views\\Claims\\Manage.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
+              "RelativeToolTip": "Views\\Claims\\Manage.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-17T12:43:39.392Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "PROG6212 POE.csproj",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\PROG6212 POE.csproj",
               "RelativeDocumentMoniker": "PROG6212 POE.csproj",
@@ -157,20 +164,7 @@
               "RelativeToolTip": "PROG6212 POE.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-16T15:58:04.325Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Models\\Data\\Entities\\User.cs",
-              "RelativeDocumentMoniker": "Models\\Data\\Entities\\User.cs",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Models\\Data\\Entities\\User.cs",
-              "RelativeToolTip": "Models\\Data\\Entities\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T12:57:23.275Z"
+              "WhenOpened": "2025-10-16T15:58:04.325Z"
             }
           ]
         }
