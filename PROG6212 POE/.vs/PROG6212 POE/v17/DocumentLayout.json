@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\services\\iclaimservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:services\\iclaimservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\services\\claimservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:services\\claimservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\services\\iclaimservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:services\\iclaimservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\models\\claimviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,25 +70,24 @@
               "RelativeToolTip": "Models\\ClaimViewModel.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAgwDIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T13:32:52.518Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T13:32:52.518Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ClaimService.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\ClaimService.cs",
               "RelativeDocumentMoniker": "Services\\ClaimService.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\ClaimService.cs",
               "RelativeToolTip": "Services\\ClaimService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-17T12:41:12.069Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "IClaimService.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Services\\IClaimService.cs",
               "RelativeDocumentMoniker": "Services\\IClaimService.cs",
