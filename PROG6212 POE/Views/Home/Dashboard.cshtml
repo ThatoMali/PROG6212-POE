@@ -1,4 +1,4 @@
-﻿@using ContractMonthlyClaimSystem.Models
+﻿@using PROG6212_POE.Models.Entities
 @model DashboardViewModel
 @{
     ViewData["Title"] = "Dashboard";
@@ -51,7 +51,9 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Date</th>
-                                <th>Amount</th>
+                                <th>Hours</th>
+                                <th>Rate</th>
+                                <th>Total Amount</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -61,7 +63,9 @@
                                 <tr>
                                     <td>@claim.Title</td>
                                     <td>@claim.Date.ToString("dd MMM yyyy")</td>
-                                    <td>@claim.Amount.ToString("C")</td>
+                                    <td>@claim.HoursWorked</td>
+                                    <td>R@claim.HourlyRate</td>
+                                    <td>R@claim.TotalAmount</td>
                                     <td>
                                         <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
                                     </td>

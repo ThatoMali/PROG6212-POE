@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using PROG6212_POE.Models.Entities;
 
-namespace ContractMonthlyClaimSystem.Models
+namespace PROG6212_POE.Models
 {
     public class LoginViewModel
     {
@@ -14,6 +15,6 @@ namespace ContractMonthlyClaimSystem.Models
         public string Password { get; set; }
 
         [Display(Name = "Role")]
-        public UserRole Role { get; set; }
+        public UserType Role { get; set; }
     }
 }

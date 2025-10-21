@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using PROG6212_POE.Models.Entities;
 
-namespace ContractMonthlyClaimSystem.Models
+namespace PROG6212_POE.Models
 {
     public class DashboardViewModel
     {
-        public UserRole UserRole { get; set; }
+        public UserType UserRole { get; set; }
         public int TotalClaims { get; set; }
         public int PendingApproval { get; set; }
         public int Approved { get; set; }
-        public List<ClaimViewModel> RecentClaims { get; set; }
+        public List<PROG6212_POE.Models.Entities.Claim> RecentClaims { get; set; }
     }
 }

@@ -1,37 +1,138 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ContractMonthlyClaimSystem.Models;
+using PROG6212_POE.Models;
+using PROG6212_POE.Services;
+using PROG6212_POE.Models.Entities;
 
-namespace ContractMonthlyClaimSystem.Controllers
+namespace PROG6212_POE.Controllers
 {
     public class ClaimsController : Controller
     {
-        public IActionResult Index(UserRole role)
+        private readonly IClaimService _claimService;
+        private readonly IFileService _fileService;
+
+        public ClaimsController(IClaimService claimService, IFileService fileService)
         {
-            var claims = GetSampleClaims();
-            ViewBag.UserRole = role;
+            _claimService = claimService;
+            _fileService = fileService;
+        }
+
+        // GET: Claims for lecturers to view their claims
+        public async Task<IActionResult> Index()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
+            var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
+
+            List<Claim> claims;
+
+            if (userRole == UserType.Lecturer)
+            {
+                claims = await _claimService.GetClaimsByLecturerAsync(userId);
+            }
+            else
+            {
+                claims = await _claimService.GetAllClaimsAsync();
+            }
+
+            ViewBag.UserRole = userRole;
             return View(claims);
         }
 
+        // GET: Submit claim form
         public IActionResult Submit()
         {
+            var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
+
+            // Allow all roles to submit claims for demo purposes
+            // if (userRole != UserType.Lecturer)
+            // {
+            //     return RedirectToAction("Index");
+            // }
+
             return View();
         }
 
+        // POST: Submit claim
         [HttpPost]
-        public IActionResult Submit(ClaimViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Submit(ClaimViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // Non-functional prototype - just redirect to claims list
-            return RedirectToAction("Index", new { role = UserRole.Lecturer });
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
+                var claim = await _claimService.CreateClaimAsync(model, userId);
+
+                // Handle file upload
+                if (model.Document != null && _fileService.ValidateFile(model.Document))
+                {
+                    await _claimService.UploadDocumentAsync(claim.Id, model.Document);
+                }
+
+                TempData["SuccessMessage"] = "Claim submitted successfully!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while submitting the claim. Please try again.");
+                return View(model);
+            }
         }
 
-        public IActionResult Details(int id)
+        // GET: Manage claims for coordinators and managers
+        public async Task<IActionResult> Manage()
         {
-            var claim = GetSampleClaims().FirstOrDefault(c => c.Id == id);
+            var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
+
+            // Allow all roles to manage claims for demo purposes
+            // if (userRole != UserType.ProgramCoordinator && userRole != UserType.AcademicManager)
+            // {
+            //     return RedirectToAction("Index");
+            // }
+
+            var pendingClaims = await _claimService.GetPendingClaimsAsync();
+            return View(pendingClaims);
+        }
+
+        // POST: Approve claim
+        [HttpPost]
+        public async Task<IActionResult> Approve(int id)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId") ?? 2; // Default to coordinator for demo
+                var success = await _claimService.UpdateClaimStatusAsync(id, "Approved", userId); // Removed .Value
+                return Json(new { success = success, message = success ? "Claim approved successfully" : "Failed to approve claim" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred" });
+            }
+        }
+
+        // POST: Reject claim
+        [HttpPost]
+        public async Task<IActionResult> Reject(int id)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId") ?? 2; // Default to coordinator for demo
+                var success = await _claimService.UpdateClaimStatusAsync(id, "Rejected", userId); // Removed .Value
+                return Json(new { success = success, message = success ? "Claim rejected successfully" : "Failed to reject claim" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred" });
+            }
+        }
+
+        // GET: Claim details
+        public async Task<IActionResult> Details(int id)
+        {
+            var claim = await _claimService.GetClaimByIdAsync(id);
             if (claim == null)
             {
                 return NotFound();
@@ -40,15 +141,16 @@ namespace ContractMonthlyClaimSystem.Controllers
             return View(claim);
         }
 
-        private List<ClaimViewModel> GetSampleClaims()
+        // GET: Download document
+        public async Task<IActionResult> DownloadDocument(int claimId)
         {
-            return new List<ClaimViewModel>
+            var document = await _claimService.GetDocumentAsync(claimId);
+            if (document == null || document.FileData == null || document.FileData.Length == 0)
             {
-                new ClaimViewModel { Id = 1, Title = "Research Materials", Description = "Books and journals for research", Amount = 150.50m, Date = DateTime.Now.AddDays(-5), Status = "Approved", FileName = "receipt1.pdf" },
-                new ClaimViewModel { Id = 2, Title = "Conference Travel", Description = "Travel expenses for academic conference", Amount = 420.75m, Date = DateTime.Now.AddDays(-12), Status = "Pending", FileName = "conference_receipts.zip" },
-                new ClaimViewModel { Id = 3, Title = "Software License", Description = "Annual license for statistical software", Amount = 299.99m, Date = DateTime.Now.AddDays(-18), Status = "Approved", FileName = "license_invoice.pdf" },
-                new ClaimViewModel { Id = 4, Title = "Lab Equipment", Description = "Specialized measuring instruments", Amount = 875.00m, Date = DateTime.Now.AddDays(-25), Status = "Rejected", FileName = "equipment_quote.pdf" }
-            };
+                return NotFound();
+            }
+
+            return File(document.FileData, document.ContentType, document.FileName);
         }
     }
 }

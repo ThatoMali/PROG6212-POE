@@ -1,45 +1,86 @@
-/* Custom styles for the Contract Monthly Claim System */
+/* Custom styles for Contract Monthly Claim System */
+body {
+    background-color: #f8f9fa;
+}
 
 .navbar-brand {
     font-weight: bold;
+    font-size: 1.25rem;
 }
 
 .card {
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
     margin-bottom: 1.5rem;
 }
 
-    .card .card-title {
-        color: #495057;
-        margin-bottom: 0.5rem;
-    }
-
-.table th {
-    border-top: none;
+.card-header {
     font-weight: 600;
-    color: #495057;
-}
-
-.badge {
-    font-size: 0.85em;
-    padding: 0.35em 0.65em;
 }
 
 .btn {
     border-radius: 0.375rem;
 }
 
-.form-control:focus,
-.form-select:focus {
+.table th {
+    border-top: none;
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+.badge {
+    font-size: 0.75em;
+    padding: 0.35em 0.65em;
+}
+
+.alert {
+    border-radius: 0.5rem;
+}
+
+/* Custom colors for status badges */
+.badge.bg-success {
+    background-color: #198754 !important;
+}
+
+.badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.badge.bg-primary {
+    background-color: #0d6efd !important;
+}
+
+/* Form styling */
+.form-control:focus {
     border-color: #86b7fe;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+/* Login page styling */
 .login-container {
-    max-width: 500px;
-    margin: 100px auto;
-    padding: 30px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .btn-group {
+        width: 100%;
+    }
+
+        .btn-group .btn {
+            flex: 1;
+        }
 }

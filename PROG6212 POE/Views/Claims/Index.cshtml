@@ -1,13 +1,13 @@
-﻿@using ContractMonthlyClaimSystem.Models
-@model IEnumerable<ClaimViewModel>
+﻿@using PROG6212_POE.Models.Entities
+@model IEnumerable<Claim>
 @{
     ViewData["Title"] = "My Claims";
-    var userRole = ViewBag.UserRole != null ? (UserRole)ViewBag.UserRole : UserRole.Lecturer;
+    var userRole = ViewBag.UserRole != null ? (UserType)ViewBag.UserRole : UserType.Lecturer;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>My Claims</h1>
-    @if (userRole == UserRole.Lecturer)
+    @if (userRole == UserType.Lecturer)
     {
         <a asp-action="Submit" class="btn btn-primary">Submit New Claim</a>
     }
@@ -22,9 +22,10 @@
                         <th>ID</th>
                         <th>Title</th>
                         <th>Date</th>
-                        <th>Amount</th>
+                        <th>Hours</th>
+                        <th>Rate</th>
+                        <th>Total Amount</th>
                         <th>Status</th>
-                        <th>Document</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -35,19 +36,11 @@
                             <td>@claim.Id</td>
                             <td>@claim.Title</td>
                             <td>@claim.Date.ToString("dd MMM yyyy")</td>
-                            <td>@claim.Amount.ToString("C")</td>
+                            <td>@claim.HoursWorked</td>
+                            <td>R@claim.HourlyRate</td>
+                            <td>R@claim.TotalAmount</td>
                             <td>
                                 <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
-                            </td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(claim.FileName))
-                                {
-                                    <span class="text-muted">@claim.FileName</span>
-                                }
-                                else
-                                {
-                                    <span class="text-muted">No document</span>
-                                }
                             </td>
                             <td>
                                 <a asp-action="Details" asp-route-id="@claim.Id" class="btn btn-sm btn-outline-primary">View Details</a>

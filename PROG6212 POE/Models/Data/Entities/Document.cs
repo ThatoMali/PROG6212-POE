@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PROG6212_POE.Models.Data.Entities
+namespace PROG6212_POE.Models.Entities
 {
     public class Document
     {
@@ -23,6 +23,5 @@ namespace PROG6212_POE.Models.Data.Entities
 
         // Foreign key
         public int ClaimId { get; set; }
-        public Claim Claim { get; set; }
     }
 }

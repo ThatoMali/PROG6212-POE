@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace PROG6212_POE.Models.Data.Entities
+namespace PROG6212_POE.Models.Entities
 {
     public class Claim
     {
@@ -32,13 +32,15 @@ namespace PROG6212_POE.Models.Data.Entities
 
         // Foreign keys
         public int LecturerId { get; set; }
-        public User Lecturer { get; set; }
 
         public int? ApprovedById { get; set; }
-        public User ApprovedBy { get; set; }
 
         public DateTime? ApprovalDate { get; set; }
 
         public string Notes { get; set; }
+
+        // Navigation properties (for display purposes - will be populated by service)
+        public string LecturerName { get; set; }
+        public string ApprovedByName { get; set; }
     }
 }

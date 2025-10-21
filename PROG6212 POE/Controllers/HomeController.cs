@@ -1,37 +1,69 @@
 using Microsoft.AspNetCore.Mvc;
-using ContractMonthlyClaimSystem.Models;
+using PROG6212_POE.Models;
+using PROG6212_POE.Services;
+using PROG6212_POE.Models.Entities;
 
-namespace ContractMonthlyClaimSystem.Controllers
+namespace PROG6212_POE.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IClaimService _claimService;
+
+        public HomeController(IClaimService claimService)
         {
-            return RedirectToAction("Login", "Account");
+            _claimService = claimService;
         }
 
-        public IActionResult Dashboard(UserRole role)
+        public IActionResult Index()
         {
+            return RedirectToAction("Dashboard");
+        }
+
+        public async Task<IActionResult> Dashboard()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
+            var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
+
+            var allClaims = await _claimService.GetAllClaimsAsync();
+            var userClaims = await _claimService.GetClaimsByLecturerAsync(userId);
+
             var model = new DashboardViewModel
             {
-                UserRole = role,
-                TotalClaims = 12,
-                PendingApproval = 3,
-                Approved = 7,
-                RecentClaims = GetSampleClaims()
+                UserRole = userRole,
+                TotalClaims = allClaims.Count,
+                PendingApproval = allClaims.Count(c => c.Status == "Pending"),
+                Approved = allClaims.Count(c => c.Status == "Approved"),
+                RecentClaims = allClaims.Take(5).ToList()
             };
 
             return View(model);
         }
 
-        private List<ClaimViewModel> GetSampleClaims()
+        // Demo action to switch roles without login
+        public IActionResult SwitchRole(UserType role)
         {
-            return new List<ClaimViewModel>
+            var userId = role switch
             {
-                new ClaimViewModel { Id = 1, Title = "Research Materials", Amount = 150.50m, Date = DateTime.Now.AddDays(-5), Status = "Approved" },
-                new ClaimViewModel { Id = 2, Title = "Conference Travel", Amount = 420.75m, Date = DateTime.Now.AddDays(-12), Status = "Pending" },
-                new ClaimViewModel { Id = 3, Title = "Software License", Amount = 299.99m, Date = DateTime.Now.AddDays(-18), Status = "Approved" }
+                UserType.Lecturer => 1,
+                UserType.ProgramCoordinator => 2,
+                UserType.AcademicManager => 3,
+                _ => 1
             };
+
+            var userName = role switch
+            {
+                UserType.Lecturer => "Dr. John Smith (Demo)",
+                UserType.ProgramCoordinator => "Prof. Sarah Johnson (Demo)",
+                UserType.AcademicManager => "Dr. Michael Brown (Demo)",
+                _ => "Demo User"
+            };
+
+            HttpContext.Session.SetInt32("UserId", userId);
+            HttpContext.Session.SetInt32("UserRole", (int)role);
+            HttpContext.Session.SetString("UserName", userName);
+
+            TempData["SuccessMessage"] = $"Switched to {role} role";
+            return RedirectToAction("Dashboard");
         }
     }
 }
