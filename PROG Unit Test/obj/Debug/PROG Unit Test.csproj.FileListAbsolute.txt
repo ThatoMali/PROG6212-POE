@@ -1,0 +1,15 @@
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.TestPlatform.AdapterUtilities.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\PROG Unit Test.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\PROG Unit Test.pdb
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\obj\Debug\PROG Unit Test.csproj.AssemblyReference.cache
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\obj\Debug\PROG Unit Test.csproj.CoreCompileInputs.cache
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\obj\Debug\PROG Uni.06624117.Up2Date
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\obj\Debug\PROG Unit Test.dll
+C:\Users\lab_services_student\Desktop\PROG6212-POE\PROG Unit Test\obj\Debug\PROG Unit Test.pdb

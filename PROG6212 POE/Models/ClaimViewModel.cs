@@ -36,16 +36,15 @@ namespace PROG6212_POE.Models
         [Display(Name = "Additional Notes")]
         public string Notes { get; set; }
 
-        [Display(Name = "Status")]
-        public string Status { get; set; }
-
         [Display(Name = "Supporting Document")]
         public IFormFile Document { get; set; }
 
-        public string FileName { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string LecturerName { get; set; }
-        public string ApprovedByName { get; set; }
-        public DateTime? ApprovalDate { get; set; }
+        // Remove these properties from the ViewModel as they are not user inputs
+        // public string Status { get; set; }
+        // public string FileName { get; set; }
+        // public DateTime CreatedDate { get; set; }
+        // public string LecturerName { get; set; }
+        // public string ApprovedByName { get; set; }
+        // public DateTime? ApprovalDate { get; set; }
     }
 }

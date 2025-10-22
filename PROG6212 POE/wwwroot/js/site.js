@@ -1,4 +1,24 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Client-side validation for claim form
+function validateClaimForm() {
+    const hours = parseFloat($('#hoursWorked').val());
+    const rate = parseFloat($('#hourlyRate').val());
 
-// Write your JavaScript code.
+    if (hours <= 0) {
+        alert('Hours worked must be greater than 0.');
+        return false;
+    }
+
+    if (rate <= 0) {
+        alert('Hourly rate must be greater than 0.');
+        return false;
+    }
+
+    return true;
+}
+
+// Attach validation to form submit
+$(document).ready(function () {
+    $('#claimForm').on('submit', function () {
+        return validateClaimForm();
+    });
+});

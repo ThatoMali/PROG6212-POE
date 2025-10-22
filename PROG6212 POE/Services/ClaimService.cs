@@ -71,23 +71,33 @@ namespace PROG6212_POE.Services
 
         public async Task<PROG6212_POE.Models.Entities.Claim> CreateClaimAsync(ClaimViewModel model, int lecturerId)
         {
-            var claim = new PROG6212_POE.Models.Entities.Claim
+            try
             {
-                Id = _nextClaimId++,
-                Title = model.Title,
-                Description = model.Description,
-                HoursWorked = model.HoursWorked,
-                HourlyRate = model.HourlyRate,
-                Date = model.Date,
-                Notes = model.Notes,
-                Status = "Pending",
-                LecturerId = lecturerId,
-                CreatedDate = DateTime.Now
-            };
+                var claim = new PROG6212_POE.Models.Entities.Claim
+                {
+                    Id = _nextClaimId++,
+                    Title = model.Title?.Trim() ?? "Untitled Claim",
+                    Description = model.Description?.Trim(),
+                    HoursWorked = model.HoursWorked,
+                    HourlyRate = model.HourlyRate,
+                    Date = model.Date,
+                    Notes = model.Notes?.Trim(),
+                    Status = "Pending",
+                    LecturerId = lecturerId,
+                    CreatedDate = DateTime.Now
+                };
 
-            _claims.Add(claim);
-            PopulateNavigationProperties(claim);
-            return await Task.FromResult(claim);
+                _claims.Add(claim);
+                PopulateNavigationProperties(claim);
+
+                return await Task.FromResult(claim);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                Console.WriteLine($"Error creating claim: {ex.Message}");
+                return null;
+            }
         }
 
         public async Task<bool> UpdateClaimStatusAsync(int claimId, string status, int approvedById)

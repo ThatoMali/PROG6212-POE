@@ -4,91 +4,101 @@
     ViewData["Title"] = "Submit Claim";
 }
 
-<div class="row justify-content-center">
+<h1 class="mb-4">Submit New Claim</h1>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <h5>Please fix the following errors:</h5>
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="row">
     <div class="col-md-8">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Submit New Claim</h4>
+        <form asp-action="Submit" method="post" enctype="multipart/form-data" id="claimForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-bold"></label>
+                <input asp-for="Title" class="form-control" placeholder="Enter claim title" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
             </div>
-            <div class="card-body">
-                <form asp-action="Submit" method="post" enctype="multipart/form-data" id="claimForm">
-                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="Title" class="form-label fw-bold"></label>
-                                <input asp-for="Title" class="form-control" placeholder="Enter claim title" />
-                                <span asp-validation-for="Title" class="text-danger small"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="Date" class="form-label fw-bold"></label>
-                                <input asp-for="Date" type="date" class="form-control" />
-                                <span asp-validation-for="Date" class="text-danger small"></span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label fw-bold"></label>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Describe the purpose of this claim"></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
 
+            <div class="row">
+                <div class="col-md-6">
                     <div class="mb-3">
-                        <label asp-for="Description" class="form-label fw-bold"></label>
-                        <textarea asp-for="Description" class="form-control" rows="3" placeholder="Describe the purpose of this claim"></textarea>
-                        <span asp-validation-for="Description" class="text-danger small"></span>
+                        <label asp-for="HoursWorked" class="form-label fw-bold"></label>
+                        <input asp-for="HoursWorked" type="number" step="0.1" class="form-control" id="hoursWorked" />
+                        <span asp-validation-for="HoursWorked" class="text-danger small"></span>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="HoursWorked" class="form-label fw-bold"></label>
-                                <input asp-for="HoursWorked" type="number" step="0.1" class="form-control" id="hoursWorked" />
-                                <span asp-validation-for="HoursWorked" class="text-danger small"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="HourlyRate" class="form-label fw-bold"></label>
-                                <div class="input-group">
-                                    <span class="input-group-text">R</span>
-                                    <input asp-for="HourlyRate" type="number" step="0.01" class="form-control" id="hourlyRate" />
-                                </div>
-                                <span asp-validation-for="HourlyRate" class="text-danger small"></span>
-                            </div>
-                        </div>
-                    </div>
-
+                </div>
+                <div class="col-md-6">
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Total Amount</label>
+                        <label asp-for="HourlyRate" class="form-label fw-bold"></label>
                         <div class="input-group">
                             <span class="input-group-text">R</span>
-                            <input type="text" class="form-control" id="totalAmount" readonly value="0.00" />
+                            <input asp-for="HourlyRate" type="number" step="0.01" class="form-control" id="hourlyRate" />
                         </div>
+                        <span asp-validation-for="HourlyRate" class="text-danger small"></span>
                     </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Notes" class="form-label fw-bold"></label>
-                        <textarea asp-for="Notes" class="form-control" rows="2" placeholder="Any additional notes..."></textarea>
-                        <span asp-validation-for="Notes" class="text-danger small"></span>
-                    </div>
-
-                    <div class="mb-4">
-                        <label asp-for="Document" class="form-label fw-bold"></label>
-                        <input asp-for="Document" type="file" class="form-control" id="documentUpload"
-                               accept=".pdf,.docx,.xlsx,.jpg,.png" />
-                        <div class="form-text">Supported formats: PDF, DOCX, XLSX, JPG, PNG (Max: 5MB)</div>
-                        <span asp-validation-for="Document" class="text-danger small"></span>
-                        <div id="fileName" class="mt-2 text-muted small"></div>
-                    </div>
-
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a asp-action="Index" class="btn btn-secondary me-md-2">Cancel</a>
-                        <button type="submit" class="btn btn-success btn-lg">
-                            <i class="fas fa-paper-plane me-2"></i>Submit Claim
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Total Amount</label>
+                <div class="input-group">
+                    <span class="input-group-text">R</span>
+                    <input type="text" class="form-control" id="totalAmount" readonly value="0.00" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Date" class="form-label fw-bold"></label>
+                <input asp-for="Date" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Date" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Notes" class="form-label fw-bold"></label>
+                <textarea asp-for="Notes" class="form-control" rows="2" placeholder="Any additional notes..."></textarea>
+                <span asp-validation-for="Notes" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Document" class="form-label fw-bold"></label>
+                <input asp-for="Document" type="file" class="form-control" id="documentUpload"
+                       accept=".pdf,.docx,.xlsx,.jpg,.png" />
+                <div class="form-text">Supported formats: PDF, DOCX, XLSX, JPG, PNG (Max: 5MB)</div>
+                <span asp-validation-for="Document" class="text-danger small"></span>
+                <div id="fileName" class="mt-2 text-muted small"></div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a asp-action="Index" class="btn btn-secondary me-md-2">Cancel</a>
+                <button type="submit" class="btn btn-success btn-lg" id="submitButton">
+                    <i class="fas fa-paper-plane me-2"></i>Submit Claim
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -112,6 +122,13 @@
         document.getElementById('documentUpload').addEventListener('change', function(e) {
             const fileName = this.files[0]?.name || 'No file chosen';
             document.getElementById('fileName').textContent = `Selected file: ${fileName}`;
+        });
+
+        // Form submission handling
+        document.getElementById('claimForm').addEventListener('submit', function(e) {
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
         });
 
         // Initialize calculation on page load

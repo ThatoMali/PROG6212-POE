@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG6212 POE", "PROG6212 POE.csproj", "{58B1D624-D6B0-418E-96A3-19CA8F87F054}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG Unit Test", "..\PROG Unit Test\PROG Unit Test.csproj", "{185D9090-A450-4B64-AF05-378BF6841BEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{58B1D624-D6B0-418E-96A3-19CA8F87F054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58B1D624-D6B0-418E-96A3-19CA8F87F054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58B1D624-D6B0-418E-96A3-19CA8F87F054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{185D9090-A450-4B64-AF05-378BF6841BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185D9090-A450-4B64-AF05-378BF6841BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185D9090-A450-4B64-AF05-378BF6841BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185D9090-A450-4B64-AF05-378BF6841BEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {378709EA-444E-4B5A-A32D-4E86E64679ED}
 	EndGlobalSection
 EndGlobal

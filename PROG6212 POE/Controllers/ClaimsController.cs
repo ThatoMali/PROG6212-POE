@@ -56,28 +56,62 @@ namespace PROG6212_POE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Submit(ClaimViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
             try
             {
-                var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
-                var claim = await _claimService.CreateClaimAsync(model, userId);
-
-                // Handle file upload
-                if (model.Document != null && _fileService.ValidateFile(model.Document))
+                if (!ModelState.IsValid)
                 {
-                    await _claimService.UploadDocumentAsync(claim.Id, model.Document);
+                    TempData["ErrorMessage"] = "Please fix the validation errors below.";
+                    return View(model);
                 }
 
-                TempData["SuccessMessage"] = "Claim submitted successfully!";
+                var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
+
+                // Validate required fields
+                if (model.HoursWorked <= 0)
+                {
+                    ModelState.AddModelError("HoursWorked", "Hours worked must be greater than 0.");
+                    return View(model);
+                }
+
+                if (model.HourlyRate <= 0)
+                {
+                    ModelState.AddModelError("HourlyRate", "Hourly rate must be greater than 0.");
+                    return View(model);
+                }
+
+                // Create the claim
+                var claim = await _claimService.CreateClaimAsync(model, userId);
+
+                if (claim == null)
+                {
+                    TempData["ErrorMessage"] = "Failed to create claim. Please try again.";
+                    return View(model);
+                }
+
+                // Handle file upload if provided
+                if (model.Document != null)
+                {
+                    if (!_fileService.ValidateFile(model.Document))
+                    {
+                        TempData["ErrorMessage"] = "Invalid file. Please check file type and size (max 5MB).";
+                        return View(model);
+                    }
+
+                    var uploadResult = await _claimService.UploadDocumentAsync(claim.Id, model.Document);
+                    if (!uploadResult)
+                    {
+                        // Continue even if file upload fails, but log it
+                        TempData["WarningMessage"] = "Claim submitted but file upload failed.";
+                    }
+                }
+
+                TempData["SuccessMessage"] = $"Claim '{model.Title}' submitted successfully! Claim ID: {claim.Id}";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while submitting the claim. Please try again.");
+                // Log the actual exception
+                TempData["ErrorMessage"] = $"An error occurred while submitting the claim: {ex.Message}";
                 return View(model);
             }
         }
