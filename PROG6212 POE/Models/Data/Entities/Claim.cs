@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PROG6212_POE.Models.Entities
 {
@@ -21,14 +22,21 @@ namespace PROG6212_POE.Models.Entities
         [Range(10, 500)]
         public decimal HourlyRate { get; set; }
 
+        // Automated calculation
         public decimal TotalAmount => HoursWorked * HourlyRate;
 
         [Required]
         public DateTime Date { get; set; }
 
+        // Automated status management
         public string Status { get; set; } = "Pending";
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+
+        public DateTime? LastUpdated { get; set; }
+
+        // Automated priority calculation
+        public int Priority { get; set; } = 1;
 
         // Foreign keys
         public int LecturerId { get; set; }
@@ -39,8 +47,42 @@ namespace PROG6212_POE.Models.Entities
 
         public string Notes { get; set; }
 
-        // Navigation properties (for display purposes - will be populated by service)
+        // Automated workflow tracking
+        public string WorkflowStage { get; set; } = "Submitted";
+
+        public DateTime? StageUpdated { get; set; }
+
+        // Navigation properties
         public string LecturerName { get; set; }
         public string ApprovedByName { get; set; }
+
+        // Automated audit fields
+        public int ViewCount { get; set; } = 0;
+        public DateTime? LastViewed { get; set; }
+    }
+
+    // New entity for automated workflows
+    public class ClaimWorkflow
+    {
+        public int Id { get; set; }
+        public int ClaimId { get; set; }
+        public string Action { get; set; }
+        public int PerformedById { get; set; }
+        public DateTime PerformedAt { get; set; } = DateTime.Now;
+        public string Notes { get; set; }
+        public string PreviousStatus { get; set; }
+        public string NewStatus { get; set; }
+    }
+
+    // New entity for automated reports
+    public class ClaimReport
+    {
+        public int Id { get; set; }
+        public string ReportType { get; set; }
+        public DateTime GeneratedDate { get; set; } = DateTime.Now;
+        public int GeneratedById { get; set; }
+        public string ReportData { get; set; }
+        public byte[] ReportFile { get; set; }
+        public string FileName { get; set; }
     }
 }
