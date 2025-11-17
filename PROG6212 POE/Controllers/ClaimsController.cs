@@ -2,6 +2,7 @@
 using PROG6212_POE.Models;
 using PROG6212_POE.Services;
 using PROG6212_POE.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PROG6212_POE.Controllers
 {
@@ -9,14 +10,17 @@ namespace PROG6212_POE.Controllers
     {
         private readonly IClaimService _claimService;
         private readonly IFileService _fileService;
+        private readonly ILogger<ClaimsController> _logger;
 
-        public ClaimsController(IClaimService claimService, IFileService fileService)
+        public ClaimsController(IClaimService claimService, IFileService fileService, ILogger<ClaimsController> logger)
         {
             _claimService = claimService;
             _fileService = fileService;
+            _logger = logger;
         }
 
         // GET: Claims for lecturers to view their claims
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
@@ -38,22 +42,17 @@ namespace PROG6212_POE.Controllers
         }
 
         // GET: Submit claim form
+        [Authorize(Roles = "Lecturer")]
         public IActionResult Submit()
         {
             var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
-
-            // Allow all roles to submit claims for demo purposes
-            // if (userRole != UserType.Lecturer)
-            // {
-            //     return RedirectToAction("Index");
-            // }
-
             return View();
         }
 
-        // POST: Submit claim
+        // POST: Submit claim with enhanced automation
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Lecturer")]
         public async Task<IActionResult> Submit(ClaimViewModel model)
         {
             try
@@ -66,20 +65,25 @@ namespace PROG6212_POE.Controllers
 
                 var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
 
-                // Validate required fields
-                if (model.HoursWorked <= 0)
+                // Enhanced validation with business rules
+                var validationResult = await _claimService.ValidateClaimAsync(model, userId);
+                if (!validationResult.IsValid)
                 {
-                    ModelState.AddModelError("HoursWorked", "Hours worked must be greater than 0.");
+                    foreach (var error in validationResult.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
                     return View(model);
                 }
 
-                if (model.HourlyRate <= 0)
+                // Auto-calculation feature (already implemented in model but verified here)
+                if (model.HoursWorked <= 0 || model.HourlyRate <= 0)
                 {
-                    ModelState.AddModelError("HourlyRate", "Hourly rate must be greater than 0.");
+                    ModelState.AddModelError("", "Hours worked and hourly rate must be greater than 0.");
                     return View(model);
                 }
 
-                // Create the claim
+                // Create the claim with automated status assignment
                 var claim = await _claimService.CreateClaimAsync(model, userId);
 
                 if (claim == null)
@@ -88,7 +92,7 @@ namespace PROG6212_POE.Controllers
                     return View(model);
                 }
 
-                // Handle file upload if provided
+                // Automated document processing
                 if (model.Document != null)
                 {
                     if (!_fileService.ValidateFile(model.Document))
@@ -100,70 +104,132 @@ namespace PROG6212_POE.Controllers
                     var uploadResult = await _claimService.UploadDocumentAsync(claim.Id, model.Document);
                     if (!uploadResult)
                     {
-                        // Continue even if file upload fails, but log it
                         TempData["WarningMessage"] = "Claim submitted but file upload failed.";
                     }
                 }
 
-                TempData["SuccessMessage"] = $"Claim '{model.Title}' submitted successfully! Claim ID: {claim.Id}";
+                // Automated notification (simulated)
+                await _claimService.NotifyCoordinatorAsync(claim.Id);
+
+                _logger.LogInformation($"Claim {claim.Id} submitted successfully by user {userId}");
+                TempData["SuccessMessage"] = $"Claim '{model.Title}' submitted successfully! Claim ID: {claim.Id}. Total Amount: R{model.TotalAmount}";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // Log the actual exception
+                _logger.LogError(ex, "Error submitting claim");
                 TempData["ErrorMessage"] = $"An error occurred while submitting the claim: {ex.Message}";
                 return View(model);
             }
         }
 
-        // GET: Manage claims for coordinators and managers
+        // GET: Manage claims for coordinators and managers with automated workflows
+        [Authorize(Roles = "ProgramCoordinator,AcademicManager")]
         public async Task<IActionResult> Manage()
         {
             var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
-
-            // Allow all roles to manage claims for demo purposes
-            // if (userRole != UserType.ProgramCoordinator && userRole != UserType.AcademicManager)
-            // {
-            //     return RedirectToAction("Index");
-            // }
+            var userId = HttpContext.Session.GetInt32("UserId") ?? 2;
 
             var pendingClaims = await _claimService.GetPendingClaimsAsync();
-            return View(pendingClaims);
+
+            // Automated claim prioritization
+            var prioritizedClaims = await _claimService.PrioritizeClaimsAsync(pendingClaims, userId);
+
+            ViewBag.UserRole = userRole;
+            return View(prioritizedClaims);
         }
 
-        // POST: Approve claim
+        // POST: Approve claim with automated workflow
         [HttpPost]
-        public async Task<IActionResult> Approve(int id)
+        [Authorize(Roles = "ProgramCoordinator,AcademicManager")]
+        public async Task<IActionResult> Approve(int id, string notes = "")
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("UserId") ?? 2; // Default to coordinator for demo
-                var success = await _claimService.UpdateClaimStatusAsync(id, "Approved", userId); // Removed .Value
-                return Json(new { success = success, message = success ? "Claim approved successfully" : "Failed to approve claim" });
+                var userId = HttpContext.Session.GetInt32("UserId") ?? 2;
+                var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.ProgramCoordinator);
+
+                // Automated approval workflow
+                var success = await _claimService.ProcessClaimApprovalAsync(id, userId, userRole, notes);
+
+                if (success)
+                {
+                    _logger.LogInformation($"Claim {id} approved by user {userId}");
+                    return Json(new { success = true, message = "Claim approved successfully" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to approve claim" });
+                }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"Error approving claim {id}");
+                return Json(new { success = false, message = "An error occurred while approving the claim" });
+            }
+        }
+
+        // POST: Reject claim with automated workflow
+        [HttpPost]
+        [Authorize(Roles = "ProgramCoordinator,AcademicManager")]
+        public async Task<IActionResult> Reject(int id, string reason = "")
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId") ?? 2;
+                var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.ProgramCoordinator);
+
+                // Automated rejection workflow
+                var success = await _claimService.ProcessClaimRejectionAsync(id, userId, reason);
+
+                if (success)
+                {
+                    _logger.LogInformation($"Claim {id} rejected by user {userId}");
+                    return Json(new { success = true, message = "Claim rejected successfully" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to reject claim" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error rejecting claim {id}");
+                return Json(new { success = false, message = "An error occurred while rejecting the claim" });
+            }
+        }
+
+        // GET: Automated reports for HR
+        [Authorize(Roles = "AcademicManager")]
+        public async Task<IActionResult> Reports()
+        {
+            var reports = await _claimService.GenerateReportsAsync();
+            return View(reports);
+        }
+
+        // POST: Generate automated invoice
+        [HttpPost]
+        [Authorize(Roles = "AcademicManager")]
+        public async Task<IActionResult> GenerateInvoice(int claimId)
+        {
+            try
+            {
+                var invoice = await _claimService.GenerateInvoiceAsync(claimId);
+                if (invoice != null)
+                {
+                    return File(invoice.FileData, invoice.ContentType, invoice.FileName);
+                }
+                return Json(new { success = false, message = "Failed to generate invoice" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error generating invoice for claim {claimId}");
                 return Json(new { success = false, message = "An error occurred" });
             }
         }
 
-        // POST: Reject claim
-        [HttpPost]
-        public async Task<IActionResult> Reject(int id)
-        {
-            try
-            {
-                var userId = HttpContext.Session.GetInt32("UserId") ?? 2; // Default to coordinator for demo
-                var success = await _claimService.UpdateClaimStatusAsync(id, "Rejected", userId); // Removed .Value
-                return Json(new { success = success, message = success ? "Claim rejected successfully" : "Failed to reject claim" });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "An error occurred" });
-            }
-        }
-
-        // GET: Claim details
+        // GET: Claim details with enhanced automation
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var claim = await _claimService.GetClaimByIdAsync(id);
@@ -172,10 +238,14 @@ namespace PROG6212_POE.Controllers
                 return NotFound();
             }
 
+            // Automated audit trail
+            await _claimService.RecordClaimViewAsync(id, HttpContext.Session.GetInt32("UserId") ?? 0);
+
             return View(claim);
         }
 
         // GET: Download document
+        [Authorize]
         public async Task<IActionResult> DownloadDocument(int claimId)
         {
             var document = await _claimService.GetDocumentAsync(claimId);
@@ -184,7 +254,22 @@ namespace PROG6212_POE.Controllers
                 return NotFound();
             }
 
+            // Automated download tracking
+            await _claimService.RecordDocumentDownloadAsync(claimId, HttpContext.Session.GetInt32("UserId") ?? 0);
+
             return File(document.FileData, document.ContentType, document.FileName);
+        }
+
+        // GET: Bulk actions for HR
+        [Authorize(Roles = "AcademicManager")]
+        public async Task<IActionResult> BulkApprove()
+        {
+            var result = await _claimService.ProcessBulkApprovalAsync();
+            return Json(new
+            {
+                success = true,
+                message = $"Bulk approval completed. {result.ApprovedCount} claims approved, {result.SkippedCount} skipped."
+            });
         }
     }
 }
