@@ -11,7 +11,7 @@ namespace PROG6212_POE.Services
         private readonly ILogger<ClaimService> _logger;
         private readonly IWebHostEnvironment _environment;
 
-        // In-memory storage (replace with database in production)
+        // In-memory storage
         private static List<User> _users = new List<User>
         {
             new User { Id = 1, Username = "lecturer1", Password = "password", Email = "lecturer1@university.com", FullName = "Dr. John Smith", Role = UserType.Lecturer },
@@ -28,10 +28,12 @@ namespace PROG6212_POE.Services
 
         private static List<ClaimWorkflow> _workflows = new List<ClaimWorkflow>();
         private static List<ClaimReport> _reports = new List<ClaimReport>();
+        private static List<Document> _documents = new List<Document>();
 
         private static int _nextClaimId = 4;
         private static int _nextWorkflowId = 1;
         private static int _nextReportId = 1;
+        private static int _nextDocumentId = 1;
 
         public ClaimService(IFileService fileService, ILogger<ClaimService> logger, IWebHostEnvironment environment)
         {
@@ -40,10 +42,150 @@ namespace PROG6212_POE.Services
             _environment = environment;
         }
 
-        // Existing methods remain the same...
+        // Basic CRUD Methods - FIXED IMPLEMENTATIONS
+        public async Task<List<Claim>> GetAllClaimsAsync()
+        {
+            var claims = _claims
+                .OrderByDescending(c => c.CreatedDate)
+                .ToList();
 
-        // New automation methods implementation:
+            claims.ForEach(c => PopulateNavigationProperties(c));
+            return await Task.FromResult(claims);
+        }
 
+        public async Task<List<Claim>> GetClaimsByLecturerAsync(int lecturerId)
+        {
+            var claims = _claims
+                .Where(c => c.LecturerId == lecturerId)
+                .OrderByDescending(c => c.CreatedDate)
+                .ToList();
+
+            claims.ForEach(c => PopulateNavigationProperties(c));
+            return await Task.FromResult(claims);
+        }
+
+        public async Task<List<Claim>> GetPendingClaimsAsync()
+        {
+            var claims = _claims
+                .Where(c => c.Status == "Pending")
+                .OrderBy(c => c.CreatedDate)
+                .ToList();
+
+            claims.ForEach(c => PopulateNavigationProperties(c));
+            return await Task.FromResult(claims);
+        }
+
+        public async Task<Claim> GetClaimByIdAsync(int id)
+        {
+            var claim = _claims.FirstOrDefault(c => c.Id == id);
+            if (claim != null)
+            {
+                PopulateNavigationProperties(claim);
+            }
+            return await Task.FromResult(claim);
+        }
+
+        public async Task<Claim> CreateClaimAsync(ClaimViewModel model, int lecturerId)
+        {
+            try
+            {
+                var claim = new Claim
+                {
+                    Id = _nextClaimId++,
+                    Title = model.Title?.Trim() ?? "Untitled Claim",
+                    Description = model.Description?.Trim(),
+                    HoursWorked = model.HoursWorked,
+                    HourlyRate = model.HourlyRate,
+                    Date = model.Date,
+                    Notes = model.Notes?.Trim(),
+                    Status = "Pending",
+                    LecturerId = lecturerId,
+                    CreatedDate = DateTime.Now,
+                    LastUpdated = DateTime.Now
+                };
+
+                _claims.Add(claim);
+                PopulateNavigationProperties(claim);
+
+                return await Task.FromResult(claim);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error creating claim: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<bool> UpdateClaimStatusAsync(int claimId, string status, int approvedById)
+        {
+            var claim = _claims.FirstOrDefault(c => c.Id == claimId);
+            if (claim == null) return await Task.FromResult(false);
+
+            claim.Status = status;
+            claim.ApprovedById = approvedById;
+            claim.ApprovalDate = DateTime.Now;
+            claim.LastUpdated = DateTime.Now;
+            PopulateNavigationProperties(claim);
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> DeleteClaimAsync(int id)
+        {
+            var claim = _claims.FirstOrDefault(c => c.Id == id);
+            if (claim == null) return await Task.FromResult(false);
+
+            _claims.Remove(claim);
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> UploadDocumentAsync(int claimId, IFormFile file)
+        {
+            try
+            {
+                var claim = _claims.FirstOrDefault(c => c.Id == claimId);
+                if (claim == null) return await Task.FromResult(false);
+
+                var document = await _fileService.SaveFileAsync(file, claimId);
+                return await Task.FromResult(document != null);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error uploading document: {ex.Message}");
+                return await Task.FromResult(false);
+            }
+        }
+
+        public async Task<Document> GetDocumentAsync(int claimId)
+        {
+            // Use FileService to get the document
+            var result = await _fileService.GetFileAsync(claimId);
+            if (result.fileData == null)
+                return null;
+
+            return new Document
+            {
+                Id = _nextDocumentId++,
+                FileName = result.fileName,
+                ContentType = result.contentType,
+                FileData = result.fileData,
+                FileSize = result.fileData.Length,
+                ClaimId = claimId,
+                UploadDate = DateTime.Now
+            };
+        }
+
+        public async Task<User> GetUserByUsernameAsync(string username)
+        {
+            return await Task.FromResult(_users.FirstOrDefault(u => u.Username == username));
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await Task.FromResult(_users.FirstOrDefault(u => u.Id == id));
+        }
+
+        // Automation Methods - FIXED IMPLEMENTATIONS
         public async Task<ValidationResult> ValidateClaimAsync(ClaimViewModel model, int lecturerId)
         {
             var result = new ValidationResult { IsValid = true };
@@ -115,7 +257,7 @@ namespace PROG6212_POE.Services
 
         public async Task<bool> ProcessClaimApprovalAsync(int claimId, int approvedById, UserType approverRole, string notes = "")
         {
-            var claim = _claims.FirstOrDefault(c => c.Id == claimId);
+            var claim = await GetClaimByIdAsync(claimId);
             if (claim == null) return false;
 
             var previousStatus = claim.Status;
@@ -157,18 +299,12 @@ namespace PROG6212_POE.Services
 
             _logger.LogInformation($"Claim {claimId} approved by user {approvedById}. Status: {claim.Status}");
 
-            // Auto-generate invoice if fully approved
-            if (claim.Status == "Approved")
-            {
-                await GenerateInvoiceAsync(claimId);
-            }
-
             return true;
         }
 
         public async Task<bool> ProcessClaimRejectionAsync(int claimId, int rejectedById, string reason = "")
         {
-            var claim = _claims.FirstOrDefault(c => c.Id == claimId);
+            var claim = await GetClaimByIdAsync(claimId);
             if (claim == null) return false;
 
             var previousStatus = claim.Status;
@@ -202,12 +338,8 @@ namespace PROG6212_POE.Services
             if (claim != null)
             {
                 _logger.LogInformation($"Notification: New claim #{claimId} '{claim.Title}' submitted by {claim.LecturerName} for amount R{claim.TotalAmount}");
-
-                // In a real application, you would:
-                // 1. Send email to coordinators
-                // 2. Create notification in database
-                // 3. Trigger real-time notification
             }
+            await Task.CompletedTask;
         }
 
         public async Task<DashboardStatistics> GetDashboardStatisticsAsync(int userId, UserType userRole)
@@ -248,7 +380,7 @@ namespace PROG6212_POE.Services
 
         public async Task RecordClaimViewAsync(int claimId, int userId)
         {
-            var claim = _claims.FirstOrDefault(c => c.Id == claimId);
+            var claim = await GetClaimByIdAsync(claimId);
             if (claim != null)
             {
                 claim.ViewCount++;
@@ -259,7 +391,7 @@ namespace PROG6212_POE.Services
 
         public async Task RecordDocumentDownloadAsync(int claimId, int userId)
         {
-            // Record document download (could be stored in database)
+            // Record document download
             _logger.LogInformation($"Document for claim {claimId} downloaded by user {userId}");
             await Task.CompletedTask;
         }
@@ -297,7 +429,7 @@ namespace PROG6212_POE.Services
             var claim = await GetClaimByIdAsync(claimId);
             if (claim == null) return null;
 
-            // Simulate invoice generation (in real implementation, use a PDF library)
+            // Simulate invoice generation
             var invoiceContent = $@"
                 INVOICE - CLAIM #{claim.Id}
                 ==============================
@@ -318,10 +450,12 @@ namespace PROG6212_POE.Services
 
             return new Document
             {
+                Id = _nextDocumentId++,
                 FileName = $"Invoice_Claim_{claimId}_{DateTime.Now:yyyyMMdd}.txt",
                 ContentType = "text/plain",
                 FileData = invoiceBytes,
-                FileSize = invoiceBytes.Length
+                FileSize = invoiceBytes.Length,
+                UploadDate = DateTime.Now
             };
         }
 
@@ -364,6 +498,21 @@ namespace PROG6212_POE.Services
 
             _logger.LogInformation($"Auto-approved {autoApproveClaims.Count} claims");
             return autoApproveClaims.Count > 0;
+        }
+
+        // Helper method to populate navigation properties
+        private Claim PopulateNavigationProperties(Claim claim)
+        {
+            var lecturer = _users.FirstOrDefault(u => u.Id == claim.LecturerId);
+            claim.LecturerName = lecturer?.FullName ?? "Unknown Lecturer";
+
+            if (claim.ApprovedById.HasValue)
+            {
+                var approver = _users.FirstOrDefault(u => u.Id == claim.ApprovedById.Value);
+                claim.ApprovedByName = approver?.FullName ?? "Unknown Approver";
+            }
+
+            return claim;
         }
     }
 }

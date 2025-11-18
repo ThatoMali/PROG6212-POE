@@ -5,7 +5,7 @@ namespace PROG6212_POE.Services
 {
     public interface IClaimService
     {
-        // Existing methods
+        // Basic CRUD methods
         Task<List<Claim>> GetAllClaimsAsync();
         Task<List<Claim>> GetClaimsByLecturerAsync(int lecturerId);
         Task<List<Claim>> GetPendingClaimsAsync();

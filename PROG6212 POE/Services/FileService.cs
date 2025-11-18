@@ -72,7 +72,7 @@ namespace PROG6212_POE.Services
             return true;
         }
 
-        // Helper method to get document by claim ID (used by ClaimService)
+        // Helper method to get document by claim ID
         public Document GetDocumentByClaimId(int claimId)
         {
             return _documents.FirstOrDefault(d => d.ClaimId == claimId);
