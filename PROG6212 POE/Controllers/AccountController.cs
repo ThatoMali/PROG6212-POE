@@ -48,11 +48,12 @@ namespace PROG6212_POE.Controllers
             _logger.LogInformation($"User {user.Username} logged in successfully as {user.Role}");
 
             // Create claims identity for authentication
-            var claims = new List<Claim>
+            // Use fully qualified name to avoid ambiguity
+            var claims = new List<System.Security.Claims.Claim>
             {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim("UserId", user.Id.ToString())
+                new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, user.Username),
+                new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, user.Role.ToString()),
+                new System.Security.Claims.Claim("UserId", user.Id.ToString())
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
