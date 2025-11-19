@@ -9,7 +9,8 @@ namespace PROG6212_POE.Models
         public int TotalClaims { get; set; }
         public int PendingApproval { get; set; }
         public int Approved { get; set; }
-        public decimal MonthlyTotal { get; set; }
+        public decimal MonthlyTotal { get; set; } // Current month total
+        public decimal AllTimeTotal { get; set; } // All-time total (optional)
         public double AverageProcessingTime { get; set; }
         public List<Claim> RecentClaims { get; set; }
         public List<Claim> HighPriorityClaims { get; set; }
@@ -30,7 +31,8 @@ namespace PROG6212_POE.Models
         public int PendingClaims { get; set; }
         public int ApprovedClaims { get; set; }
         public int RejectedClaims { get; set; }
-        public decimal MonthlyTotal { get; set; }
+        public decimal MonthlyTotal { get; set; }  // Sum of current month claims
+        public decimal AllTimeTotal { get; set; }  // Sum of ALL claims (optional)
         public double AverageProcessingTime { get; set; }
         public List<Claim> RecentClaims { get; set; }
         public List<Claim> HighPriorityClaims { get; set; }

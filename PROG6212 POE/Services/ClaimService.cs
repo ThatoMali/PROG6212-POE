@@ -424,15 +424,24 @@ namespace PROG6212_POE.Services
             var allClaims = await GetAllClaimsAsync();
             var userClaims = await GetClaimsByLecturerAsync(userId);
 
+            // FIXED: Calculate monthly total as sum of TotalAmount for CURRENT MONTH only
+            var currentMonth = DateTime.Now.Month;
+            var currentYear = DateTime.Now.Year;
+            var monthlyTotal = allClaims
+                .Where(c => c.Date.Month == currentMonth && c.Date.Year == currentYear)
+                .Sum(c => c.TotalAmount);
+
+            // FIXED: Calculate all-time total separately if needed
+            var allTimeTotal = allClaims.Sum(c => c.TotalAmount);
+
             var stats = new DashboardStatistics
             {
                 TotalClaims = userRole == UserType.Lecturer ? userClaims.Count : allClaims.Count,
                 PendingClaims = allClaims.Count(c => c.Status == "Pending"),
                 ApprovedClaims = allClaims.Count(c => c.Status == "Approved"),
                 RejectedClaims = allClaims.Count(c => c.Status == "Rejected"),
-                MonthlyTotal = allClaims
-                    .Where(c => c.Date.Month == DateTime.Now.Month && c.Date.Year == DateTime.Now.Year)
-                    .Sum(c => c.TotalAmount),
+                // FIXED: This is now the CURRENT MONTH total
+                MonthlyTotal = monthlyTotal,
                 RecentClaims = allClaims
                     .OrderByDescending(c => c.CreatedDate)
                     .Take(5)
@@ -441,9 +450,12 @@ namespace PROG6212_POE.Services
                     .Where(c => c.Status == "Pending" && c.Priority >= 3)
                     .OrderByDescending(c => c.Priority)
                     .Take(5)
-                    .ToList()
+                    .ToList(),
+                // Optional: Add AllTimeTotal if you want both
+                AllTimeTotal = allTimeTotal
             };
 
+            // Calculate average processing time for approved claims
             var approvedClaims = allClaims.Where(c => c.Status == "Approved" && c.ApprovalDate.HasValue);
             if (approvedClaims.Any())
             {

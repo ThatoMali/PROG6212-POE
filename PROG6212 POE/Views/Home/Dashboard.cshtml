@@ -2,6 +2,7 @@
 @model DashboardViewModel
 @{
     ViewData["Title"] = "Dashboard";
+    var currentMonth = DateTime.Now.ToString("MMMM yyyy");
 }
 
 <div class="row mb-4">
@@ -18,6 +19,7 @@
             <div class="card-body">
                 <h5 class="card-title text-muted">Total Claims</h5>
                 <h2 class="card-text">@Model.TotalClaims</h2>
+                <small class="text-muted">All time</small>
             </div>
         </div>
     </div>
@@ -26,6 +28,7 @@
             <div class="card-body">
                 <h5 class="card-title text-muted">Pending Approval</h5>
                 <h2 class="card-text">@Model.PendingApproval</h2>
+                <small class="text-muted">Requires action</small>
             </div>
         </div>
     </div>
@@ -34,14 +37,59 @@
             <div class="card-body">
                 <h5 class="card-title text-muted">Approved</h5>
                 <h2 class="card-text">@Model.Approved</h2>
+                <small class="text-muted">Successfully processed</small>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-center">
+        <div class="card text-center bg-light">
             <div class="card-body">
                 <h5 class="card-title text-muted">Monthly Total</h5>
-                <h2 class="card-text">R@Model.MonthlyTotal</h2>
+                <h2 class="card-text text-success">R@Model.MonthlyTotal.ToString("N2")</h2>
+                <small class="text-muted">@currentMonth</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Stats Row -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Average Processing Time</h5>
+                <h2 class="card-text">@Model.AverageProcessingTime.ToString("F1")h</h2>
+                <small class="text-muted">For approved claims</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Approval Rate</h5>
+                <h2 class="card-text">
+                    @if (Model.TotalClaims > 0)
+                    {
+                        var approvalRate = ((double)Model.Approved / Model.TotalClaims) * 100;
+                        @approvalRate.ToString("F1")
+                    
+                        <small>%</small>
+                    }
+                    else
+                    {
+                        <text>0%</text>
+                    }
+                </h2>
+                <small class="text-muted">Successful claims</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title text-muted">All-Time Total</h5>
+                <h2 class="card-text text-info">R@Model.AllTimeTotal.ToString("N2")</h2>
+                <small class="text-muted">All claims total</small>
             </div>
         </div>
     </div>
@@ -56,6 +104,7 @@
                 <div class="card-header bg-warning">
                     <h5 class="card-title mb-0 text-white">
                         <i class="fas fa-exclamation-triangle me-2"></i>High Priority Claims
+                        <span class="badge bg-danger ms-2">@Model.HighPriorityClaims.Count</span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -71,6 +120,7 @@
                                         <th>Amount</th>
                                         <th>Priority</th>
                                         <th>Days Pending</th>
+                                        <th>Workflow Stage</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -79,19 +129,35 @@
                                     {
                                         var daysPending = (DateTime.Now - claim.CreatedDate).Days;
                                         <tr>
-                                            <td>@claim.Id</td>
-                                            <td>@claim.Title</td>
+                                            <td>#@claim.Id</td>
+                                            <td>
+                                                <div class="fw-bold">@claim.Title</div>
+                                                <small class="text-muted">@claim.Date.ToString("dd MMM yyyy")</small>
+                                            </td>
                                             <td>@claim.LecturerName</td>
-                                            <td>R@claim.TotalAmount</td>
+                                            <td>
+                                                <span class="fw-bold text-success">R@claim.TotalAmount.ToString("N2")</span>
+                                                <br />
+                                                <small class="text-muted">@claim.HoursWorked h × R@claim.HourlyRate.ToString("N2")/h</small>
+                                            </td>
                                             <td>
                                                 <span class="badge @(claim.Priority >= 4 ? "bg-danger" : "bg-warning")">
-                                                    @claim.Priority
+                                                    Priority @claim.Priority
                                                 </span>
                                             </td>
-                                            <td>@daysPending</td>
+                                            <td>
+                                                <span class="@(daysPending > 7 ? "text-danger fw-bold" : "text-warning")">
+                                                    @daysPending day@(daysPending != 1 ? "s" : "")
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <small class="text-info">@claim.WorkflowStage</small>
+                                            </td>
                                             <td>
                                                 <a asp-controller="Claims" asp-action="Details" asp-route-id="@claim.Id"
-                                                   class="btn btn-sm btn-outline-primary">Review</a>
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye me-1"></i>Review
+                                                </a>
                                             </td>
                                         </tr>
                                     }
@@ -101,7 +167,11 @@
                     }
                     else
                     {
-                        <p class="text-muted text-center">No high priority claims at this time</p>
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-check-circle fa-2x mb-3 text-success"></i>
+                            <p>No high priority claims at this time</p>
+                            <small class="text-muted">All pending claims are being processed normally</small>
+                        </div>
                     }
                 </div>
             </div>
@@ -113,48 +183,81 @@
 <div class="row">
     <div class="col">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Recent Claims</h5>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-clock me-2"></i>Recent Claims
+                </h5>
+                <a asp-controller="Claims" asp-action="Index" class="btn btn-sm btn-outline-primary">
+                    View All Claims
+                </a>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Date</th>
-                                <th>Hours</th>
-                                <th>Rate</th>
-                                <th>Total Amount</th>
-                                <th>Status</th>
-                                <th>Workflow Stage</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var claim in Model.RecentClaims)
-                            {
+                @if (Model.RecentClaims.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td>@claim.Title</td>
-                                    <td>@claim.Date.ToString("dd MMM yyyy")</td>
-                                    <td>@claim.HoursWorked</td>
-                                    <td>R@claim.HourlyRate</td>
-                                    <td>R@claim.TotalAmount</td>
-                                    <td>
-                                        <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
-                                    </td>
-                                    <td>
-                                        <small class="text-muted">@claim.WorkflowStage</small>
-                                    </td>
-                                    <td>
-                                        <a asp-controller="Claims" asp-action="Details" asp-route-id="@claim.Id"
-                                           class="btn btn-sm btn-outline-primary">View Details</a>
-                                    </td>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Lecturer</th>
+                                    <th>Hours × Rate</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Workflow Stage</th>
+                                    <th>Actions</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach (var claim in Model.RecentClaims)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold">@claim.Title</div>
+                                            @if (!string.IsNullOrEmpty(claim.Description))
+                                            {
+                                                <small class="text-muted">@claim.Description</small>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div>@claim.Date.ToString("dd MMM yyyy")</div>
+                                            <small class="text-muted">@claim.CreatedDate.ToString("dd MMM HH:mm")</small>
+                                        </td>
+                                        <td>@claim.LecturerName</td>
+                                        <td>
+                                            <small>@claim.HoursWorked h × R@claim.HourlyRate.ToString("N2")</small>
+                                        </td>
+                                        <td>
+                                            <span class="fw-bold text-success">R@claim.TotalAmount.ToString("N2")</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">@claim.WorkflowStage</small>
+                                        </td>
+                                        <td>
+                                            <a asp-controller="Claims" asp-action="Details" asp-route-id="@claim.Id"
+                                               class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye me-1"></i>Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-inbox fa-2x mb-3"></i>
+                        <p>No claims found</p>
+                        <a asp-controller="Claims" asp-action="Submit" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i>Submit First Claim
+                        </a>
+                    </div>
+                }
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Claim Details";
     var userRole = (UserType)(Context.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
+    var hasDocument = ViewBag.HasDocument != null ? (bool)ViewBag.HasDocument : false;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -11,7 +12,7 @@
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
         @if (userRole == UserType.ProgramCoordinator || userRole == UserType.AcademicManager)
         {
-            <a asp-action="Manage" class="btn btn-outline-primary">Manage Claims</a>
+            <a asp-action="Manage" class="btn btn-outline-primary ms-2">Manage Claims</a>
         }
     </div>
 </div>
@@ -113,6 +114,32 @@
                         <div class="text-info fw-bold">@Model.WorkflowStage</div>
                     </div>
                 </div>
+
+                <!-- Smart Approval Info -->
+                @if (Model.Status == "Pending")
+                {
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="alert alert-info p-2">
+                                <small>
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    @if (Model.TotalAmount <= 500)
+                                    {
+                                        <text>This claim may be <strong>auto-approved</strong> by Coordinator (under R500)</text>
+                                    }
+                                    else if (Model.TotalAmount <= 1000)
+                                    {
+                                        <text>This claim requires <strong>Coordinator approval</strong> (R501 - R1000)</text>
+                                    }
+                                    else
+                                    {
+                                        <text>This claim requires <strong>Manager approval</strong> (over R1000)</text>
+                                    }
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
 
@@ -198,15 +225,17 @@
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    @if (await ViewContext.HttpContext.RequestServices.GetRequiredService<IClaimService>().GetDocumentAsync(Model.Id) != null)
+                    @if (hasDocument)
                     {
                         <a asp-action="DownloadDocument" asp-route-claimId="@Model.Id" class="btn btn-outline-primary">
                             <i class="fas fa-download me-2"></i>Download Supporting Document
                         </a>
+                        <p class="text-muted small mt-2">Document is available for download</p>
                     }
                     else
                     {
                         <p class="text-muted">No supporting documents attached</p>
+                        <small class="text-muted">No file has been uploaded for this claim</small>
                     }
                 </div>
             </div>
@@ -236,6 +265,39 @@
                 }
             </div>
         </div>
+
+        <!-- Quick Actions -->
+        @if (userRole == UserType.ProgramCoordinator || userRole == UserType.AcademicManager)
+        {
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Status == "Pending")
+                    {
+                        <div class="d-grid gap-2">
+                            @if (userRole == UserType.ProgramCoordinator || userRole == UserType.AcademicManager)
+                            {
+                                <button class="btn btn-success btn-approve" data-claim-id="@Model.Id">
+                                    <i class="fas fa-check me-1"></i>Approve Claim
+                                </button>
+                            }
+                            @if (userRole == UserType.ProgramCoordinator || userRole == UserType.AcademicManager)
+                            {
+                                <button class="btn btn-danger btn-reject" data-claim-id="@Model.Id">
+                                    <i class="fas fa-times me-1"></i>Reject Claim
+                                </button>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center">No actions available for @Model.Status claims</p>
+                    }
+                </div>
+            </div>
+        }
     </div>
 </div>
 
@@ -269,6 +331,78 @@
         border-left: 2px solid transparent;
     }
 </style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Approve claim
+            $('.btn-approve').click(function() {
+                const claimId = $(this).data('claim-id');
+                const notes = prompt('Enter approval notes (optional):');
+
+                $.post('/Claims/Approve', { id: claimId, notes: notes || '' })
+                    .done(function(response) {
+                        if (response.success) {
+                            showToast('Success', response.message, 'success');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            showToast('Error', response.message, 'error');
+                        }
+                    })
+                    .fail(function() {
+                        showToast('Error', 'An error occurred while approving the claim', 'error');
+                    });
+            });
+
+            // Reject claim
+            $('.btn-reject').click(function() {
+                const claimId = $(this).data('claim-id');
+                const reason = prompt('Enter rejection reason:');
+
+                if (!reason) {
+                    alert('Rejection reason is required.');
+                    return;
+                }
+
+                $.post('/Claims/Reject', { id: claimId, reason: reason })
+                    .done(function(response) {
+                        if (response.success) {
+                            showToast('Success', response.message, 'success');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            showToast('Error', response.message, 'error');
+                        }
+                    })
+                    .fail(function() {
+                        showToast('Error', 'An error occurred while rejecting the claim', 'error');
+                    });
+            });
+
+            function showToast(title, message, type) {
+                const toast = $(`<div class="toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0 position-fixed top-0 end-0 m-3" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <strong>${title}:</strong> ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>`);
+
+                $('body').append(toast);
+                const bsToast = new bootstrap.Toast(toast[0]);
+                bsToast.show();
+
+                toast.on('hidden.bs.toast', function() {
+                    $(this).remove();
+                });
+            }
+        });
+    </script>
+}
 
 @functions {
     public string GetStatusBadgeClass(string status)
