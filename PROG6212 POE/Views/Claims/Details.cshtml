@@ -1,5 +1,307 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using PROG6212_POE.Models.Entities
+@model Claim
 @{
+    ViewData["Title"] = "Claim Details";
+    var userRole = (UserType)(Context.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Claim Details</h1>
+    <div>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        @if (userRole == UserType.ProgramCoordinator || userRole == UserType.AcademicManager)
+        {
+            <a asp-action="Manage" class="btn btn-outline-primary">Manage Claims</a>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <!-- Claim Information -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Claim Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <strong>Claim ID:</strong>
+                        <div class="text-muted">#@Model.Id</div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Status:</strong>
+                        <div>
+                            <span class="badge @GetStatusBadgeClass(Model.Status)">@Model.Status</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <strong>Title:</strong>
+                        <div class="text-muted">@Model.Title</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <strong>Description:</strong>
+                        <div class="text-muted">@(string.IsNullOrEmpty(Model.Description) ? "No description" : Model.Description)</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <strong>Lecturer:</strong>
+                        <div class="text-muted">@Model.LecturerName</div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Submitted Date:</strong>
+                        <div class="text-muted">@Model.CreatedDate.ToString("dd MMM yyyy HH:mm")</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <strong>Claim Date:</strong>
+                        <div class="text-muted">@Model.Date.ToString("dd MMM yyyy")</div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Last Updated:</strong>
+                        <div class="text-muted">@(Model.LastUpdated?.ToString("dd MMM yyyy HH:mm") ?? "Never")</div>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.Notes))
+                {
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <strong>Notes:</strong>
+                            <div class="text-muted">@Model.Notes</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Financial Information -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Financial Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <strong>Hours Worked:</strong>
+                        <div>@Model.HoursWorked</div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Hourly Rate:</strong>
+                        <div>R@Model.HourlyRate</div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <strong>Total Amount:</strong>
+                        <div class="fs-4 text-success fw-bold">R@Model.TotalAmount</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <strong>Workflow Stage:</strong>
+                        <div class="text-info fw-bold">@Model.WorkflowStage</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approval Information -->
+        @if (Model.Status == "Approved" || Model.Status == "Rejected")
+        {
+            <div class="card mb-4">
+                <div class="card-header @(Model.Status == "Approved" ? "bg-success" : "bg-danger") text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-check me-2"></i>Approval Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <strong>@(Model.Status == "Approved" ? "Approved By" : "Rejected By"):</strong>
+                            <div>@Model.ApprovedByName</div>
+                        </div>
+                        <div class="col-6">
+                            <strong>@(Model.Status == "Approved" ? "Approval Date" : "Rejection Date"):</strong>
+                            <div>@Model.ApprovalDate?.ToString("dd MMM yyyy HH:mm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Workflow History -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-history me-2"></i>Workflow History</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.WorkflowHistory.Any())
+                {
+                    <div class="timeline">
+                        @foreach (var workflow in Model.WorkflowHistory.OrderBy(w => w.PerformedAt))
+                        {
+                            <div class="timeline-item mb-3">
+                                <div class="timeline-marker @GetWorkflowMarkerClass(workflow.Action)"></div>
+                                <div class="timeline-content">
+                                    <div class="d-flex justify-content-between">
+                                        <strong class="@GetWorkflowTextClass(workflow.Action)">
+                                            @workflow.Action
+                                        </strong>
+                                        <small class="text-muted">@workflow.PerformedAt.ToString("dd MMM HH:mm")</small>
+                                    </div>
+                                    <div class="text-muted small">By: @workflow.PerformedByName</div>
+                                    @if (!string.IsNullOrEmpty(workflow.Notes))
+                                    {
+                                        <div class="mt-1"><small>@workflow.Notes</small></div>
+                                    }
+                                    <div class="mt-1">
+                                        <span class="badge bg-secondary">@workflow.PreviousStatus</span>
+                                        <i class="fas fa-arrow-right mx-2 text-muted"></i>
+                                        <span class="badge @GetStatusBadgeClass(workflow.NewStatus)">@workflow.NewStatus</span>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(workflow.WorkflowStage))
+                                    {
+                                        <div class="mt-1">
+                                            <small class="text-info"><i class="fas fa-cog me-1"></i>@workflow.WorkflowStage</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-muted">
+                        <i class="fas fa-history fa-2x mb-2"></i>
+                        <p>No workflow history available</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Document Information -->
+        <div class="card mt-4">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0"><i class="fas fa-file me-2"></i>Documents</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    @if (await ViewContext.HttpContext.RequestServices.GetRequiredService<IClaimService>().GetDocumentAsync(Model.Id) != null)
+                    {
+                        <a asp-action="DownloadDocument" asp-route-claimId="@Model.Id" class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i>Download Supporting Document
+                        </a>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No supporting documents attached</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- View Statistics -->
+        <div class="card mt-4">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>View Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div class="fs-4 fw-bold">@Model.ViewCount</div>
+                        <div class="text-muted small">Views</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="fs-4 fw-bold">@Model.Priority</div>
+                        <div class="text-muted small">Priority</div>
+                    </div>
+                </div>
+                @if (Model.LastViewed.HasValue)
+                {
+                    <div class="text-center mt-2">
+                        <small class="text-muted">Last viewed: @Model.LastViewed.Value.ToString("dd MMM yyyy HH:mm")</small>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+
+    .timeline-item {
+        position: relative;
+    }
+
+    .timeline-marker {
+        position: absolute;
+        left: -30px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+
+    .timeline-content {
+        padding-bottom: 10px;
+        border-left: 2px solid #dee2e6;
+        padding-left: 15px;
+    }
+
+    .timeline-item:last-child .timeline-content {
+        border-left: 2px solid transparent;
+    }
+</style>
+
+@functions {
+    public string GetStatusBadgeClass(string status)
+    {
+        return status.ToLower() switch
+        {
+            "approved" => "bg-success",
+            "pending" => "bg-warning",
+            "rejected" => "bg-danger",
+            "pending manager review" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+
+    public string GetWorkflowMarkerClass(string action)
+    {
+        return action.ToLower() switch
+        {
+            "approval" => "bg-success",
+            "rejection" => "bg-danger",
+            "submission" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    public string GetWorkflowTextClass(string action)
+    {
+        return action.ToLower() switch
+        {
+            "approval" => "text-success",
+            "rejection" => "text-danger",
+            "submission" => "text-primary",
+            _ => "text-secondary"
+        };
+    }
 }

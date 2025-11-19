@@ -59,22 +59,26 @@ namespace PROG6212_POE.Models.Entities
         // Automated audit fields
         public int ViewCount { get; set; } = 0;
         public DateTime? LastViewed { get; set; }
+
+        // Workflow history (not stored in database, populated when needed)
+        [NotMapped]
+        public List<ClaimWorkflow> WorkflowHistory { get; set; } = new List<ClaimWorkflow>();
     }
 
-    // New entity for automated workflows
     public class ClaimWorkflow
     {
         public int Id { get; set; }
         public int ClaimId { get; set; }
         public string Action { get; set; }
         public int PerformedById { get; set; }
+        public string PerformedByName { get; set; }
         public DateTime PerformedAt { get; set; } = DateTime.Now;
         public string Notes { get; set; }
         public string PreviousStatus { get; set; }
         public string NewStatus { get; set; }
+        public string WorkflowStage { get; set; }
     }
 
-    // New entity for automated reports
     public class ClaimReport
     {
         public int Id { get; set; }

@@ -21,35 +21,67 @@ namespace PROG6212_POE.Services
 
         private static List<Claim> _claims = new List<Claim>
         {
-            new Claim { Id = 1, Title = "Research Materials", Description = "Books and journals for research", HoursWorked = 10, HourlyRate = 150, Date = DateTime.Now.AddDays(-5), Status = "Approved", LecturerId = 1, ApprovedById = 2, ApprovalDate = DateTime.Now.AddDays(-3), Notes = "Approved for research purposes", CreatedDate = DateTime.Now.AddDays(-5) },
-            new Claim { Id = 2, Title = "Conference Travel", Description = "Travel expenses for academic conference", HoursWorked = 8, HourlyRate = 120, Date = DateTime.Now.AddDays(-12), Status = "Pending", LecturerId = 1, Notes = "International conference presentation", CreatedDate = DateTime.Now.AddDays(-12) },
-            new Claim { Id = 3, Title = "Software License", Description = "Annual license for statistical software", HoursWorked = 5, HourlyRate = 200, Date = DateTime.Now.AddDays(-18), Status = "Approved", LecturerId = 1, ApprovedById = 3, ApprovalDate = DateTime.Now.AddDays(-10), Notes = "Essential research tool", CreatedDate = DateTime.Now.AddDays(-18) }
+            new Claim { Id = 1, Title = "Research Materials", Description = "Books and journals for research", HoursWorked = 10, HourlyRate = 150, Date = DateTime.Now.AddDays(-5), Status = "Approved", LecturerId = 1, ApprovedById = 2, ApprovalDate = DateTime.Now.AddDays(-3), Notes = "Approved for research purposes", CreatedDate = DateTime.Now.AddDays(-5), WorkflowStage = "Coordinator Approved" },
+            new Claim { Id = 2, Title = "Conference Travel", Description = "Travel expenses for academic conference", HoursWorked = 8, HourlyRate = 120, Date = DateTime.Now.AddDays(-12), Status = "Pending", LecturerId = 1, Notes = "International conference presentation", CreatedDate = DateTime.Now.AddDays(-12), WorkflowStage = "Submitted" },
+            new Claim { Id = 3, Title = "Software License", Description = "Annual license for statistical software", HoursWorked = 5, HourlyRate = 200, Date = DateTime.Now.AddDays(-18), Status = "Approved", LecturerId = 1, ApprovedById = 3, ApprovalDate = DateTime.Now.AddDays(-10), Notes = "Essential research tool", CreatedDate = DateTime.Now.AddDays(-18), WorkflowStage = "Manager Approved" }
         };
 
         private static List<ClaimWorkflow> _workflows = new List<ClaimWorkflow>();
         private static List<ClaimReport> _reports = new List<ClaimReport>();
-        private static List<Document> _documents = new List<Document>();
 
         private static int _nextClaimId = 4;
         private static int _nextWorkflowId = 1;
         private static int _nextReportId = 1;
-        private static int _nextDocumentId = 1;
 
         public ClaimService(IFileService fileService, ILogger<ClaimService> logger, IWebHostEnvironment environment)
         {
             _fileService = fileService;
             _logger = logger;
             _environment = environment;
+
+            // Initialize some workflow history for demo
+            if (!_workflows.Any())
+            {
+                _workflows.Add(new ClaimWorkflow
+                {
+                    Id = _nextWorkflowId++,
+                    ClaimId = 1,
+                    Action = "Submission",
+                    PerformedById = 1,
+                    PerformedByName = "Dr. John Smith",
+                    PerformedAt = DateTime.Now.AddDays(-5),
+                    Notes = "Claim submitted for research materials",
+                    PreviousStatus = "None",
+                    NewStatus = "Pending",
+                    WorkflowStage = "Submitted"
+                });
+                _workflows.Add(new ClaimWorkflow
+                {
+                    Id = _nextWorkflowId++,
+                    ClaimId = 1,
+                    Action = "Approval",
+                    PerformedById = 2,
+                    PerformedByName = "Prof. Sarah Johnson",
+                    PerformedAt = DateTime.Now.AddDays(-3),
+                    Notes = "Approved for research purposes",
+                    PreviousStatus = "Pending",
+                    NewStatus = "Approved",
+                    WorkflowStage = "Coordinator Approved"
+                });
+            }
         }
 
-        // Basic CRUD Methods - FIXED IMPLEMENTATIONS
+        // Basic CRUD Methods
         public async Task<List<Claim>> GetAllClaimsAsync()
         {
             var claims = _claims
                 .OrderByDescending(c => c.CreatedDate)
                 .ToList();
 
-            claims.ForEach(c => PopulateNavigationProperties(c));
+            claims.ForEach(c => {
+                PopulateNavigationProperties(c);
+                PopulateWorkflowHistory(c);
+            });
             return await Task.FromResult(claims);
         }
 
@@ -60,7 +92,10 @@ namespace PROG6212_POE.Services
                 .OrderByDescending(c => c.CreatedDate)
                 .ToList();
 
-            claims.ForEach(c => PopulateNavigationProperties(c));
+            claims.ForEach(c => {
+                PopulateNavigationProperties(c);
+                PopulateWorkflowHistory(c);
+            });
             return await Task.FromResult(claims);
         }
 
@@ -71,7 +106,10 @@ namespace PROG6212_POE.Services
                 .OrderBy(c => c.CreatedDate)
                 .ToList();
 
-            claims.ForEach(c => PopulateNavigationProperties(c));
+            claims.ForEach(c => {
+                PopulateNavigationProperties(c);
+                PopulateWorkflowHistory(c);
+            });
             return await Task.FromResult(claims);
         }
 
@@ -81,6 +119,7 @@ namespace PROG6212_POE.Services
             if (claim != null)
             {
                 PopulateNavigationProperties(claim);
+                PopulateWorkflowHistory(claim);
             }
             return await Task.FromResult(claim);
         }
@@ -101,11 +140,28 @@ namespace PROG6212_POE.Services
                     Status = "Pending",
                     LecturerId = lecturerId,
                     CreatedDate = DateTime.Now,
-                    LastUpdated = DateTime.Now
+                    LastUpdated = DateTime.Now,
+                    WorkflowStage = "Submitted"
                 };
 
                 _claims.Add(claim);
                 PopulateNavigationProperties(claim);
+
+                // Record workflow for submission
+                var lecturer = await GetUserByIdAsync(lecturerId);
+                _workflows.Add(new ClaimWorkflow
+                {
+                    Id = _nextWorkflowId++,
+                    ClaimId = claim.Id,
+                    Action = "Submission",
+                    PerformedById = lecturerId,
+                    PerformedByName = lecturer?.FullName ?? "Unknown User",
+                    PerformedAt = DateTime.Now,
+                    Notes = "Claim submitted",
+                    PreviousStatus = "None",
+                    NewStatus = "Pending",
+                    WorkflowStage = "Submitted"
+                });
 
                 return await Task.FromResult(claim);
             }
@@ -121,6 +177,7 @@ namespace PROG6212_POE.Services
             var claim = _claims.FirstOrDefault(c => c.Id == claimId);
             if (claim == null) return await Task.FromResult(false);
 
+            var previousStatus = claim.Status;
             claim.Status = status;
             claim.ApprovedById = approvedById;
             claim.ApprovalDate = DateTime.Now;
@@ -158,20 +215,17 @@ namespace PROG6212_POE.Services
 
         public async Task<Document> GetDocumentAsync(int claimId)
         {
-            // Use FileService to get the document
             var result = await _fileService.GetFileAsync(claimId);
             if (result.fileData == null)
                 return null;
 
             return new Document
             {
-                Id = _nextDocumentId++,
                 FileName = result.fileName,
                 ContentType = result.contentType,
                 FileData = result.fileData,
                 FileSize = result.fileData.Length,
-                ClaimId = claimId,
-                UploadDate = DateTime.Now
+                ClaimId = claimId
             };
         }
 
@@ -185,12 +239,12 @@ namespace PROG6212_POE.Services
             return await Task.FromResult(_users.FirstOrDefault(u => u.Id == id));
         }
 
-        // Automation Methods - FIXED IMPLEMENTATIONS
+        // Automation Methods - FIXED SMART APPROVAL WORKFLOW
         public async Task<ValidationResult> ValidateClaimAsync(ClaimViewModel model, int lecturerId)
         {
             var result = new ValidationResult { IsValid = true };
 
-            // Automated business rule validation
+            // Business rule validation
             if (model.HoursWorked > 100)
             {
                 result.Warnings.Add("Hours worked exceeds typical limit. Please ensure accuracy.");
@@ -201,7 +255,7 @@ namespace PROG6212_POE.Services
                 result.Warnings.Add("Hourly rate is above average. May require additional approval.");
             }
 
-            // Check for duplicate claims (same title and date)
+            // Check for duplicate claims
             var duplicate = _claims.Any(c =>
                 c.LecturerId == lecturerId &&
                 c.Title.Equals(model.Title, StringComparison.OrdinalIgnoreCase) &&
@@ -220,7 +274,7 @@ namespace PROG6212_POE.Services
                            c.Date.Year == model.Date.Year)
                 .Sum(c => c.TotalAmount);
 
-            if (monthlyTotal + model.TotalAmount > 10000) // R10,000 monthly limit
+            if (monthlyTotal + model.TotalAmount > 10000)
             {
                 result.Errors.Add("Monthly claim limit exceeded. Please contact coordinator.");
                 result.IsValid = false;
@@ -231,21 +285,17 @@ namespace PROG6212_POE.Services
 
         public async Task<List<Claim>> PrioritizeClaimsAsync(List<Claim> claims, int userId)
         {
-            // Automated prioritization algorithm
             foreach (var claim in claims)
             {
-                var priority = 1; // Default priority
+                var priority = 1;
 
-                // Higher priority for older claims
                 var daysPending = (DateTime.Now - claim.CreatedDate).Days;
                 if (daysPending > 7) priority += 2;
                 else if (daysPending > 3) priority += 1;
 
-                // Higher priority for larger amounts
                 if (claim.TotalAmount > 1000) priority += 1;
                 if (claim.TotalAmount > 2000) priority += 1;
 
-                // Higher priority if has documents
                 var hasDocument = await GetDocumentAsync(claim.Id) != null;
                 if (hasDocument) priority += 1;
 
@@ -261,26 +311,43 @@ namespace PROG6212_POE.Services
             if (claim == null) return false;
 
             var previousStatus = claim.Status;
+            var approver = await GetUserByIdAsync(approvedById);
 
-            // Automated workflow based on approver role
-            if (approverRole == UserType.ProgramCoordinator && claim.TotalAmount <= 1000)
+            // FIXED: Smart Approval Workflow
+            if (approverRole == UserType.ProgramCoordinator)
             {
-                claim.Status = "Approved";
-                claim.WorkflowStage = "Coordinator Approved";
+                if (claim.TotalAmount <= 500) // Auto-approve small claims
+                {
+                    claim.Status = "Approved";
+                    claim.WorkflowStage = "Auto-Approved by Coordinator";
+                    claim.ApprovedById = approvedById;
+                    claim.ApprovalDate = DateTime.Now;
+                    notes = string.IsNullOrEmpty(notes) ? "Auto-approved (under R500)" : notes;
+                }
+                else if (claim.TotalAmount <= 1000) // Coordinator can approve up to R1000
+                {
+                    claim.Status = "Approved";
+                    claim.WorkflowStage = "Coordinator Approved";
+                    claim.ApprovedById = approvedById;
+                    claim.ApprovalDate = DateTime.Now;
+                }
+                else // Over R1000 requires manager approval
+                {
+                    claim.Status = "Pending Manager Review";
+                    claim.WorkflowStage = "Requires Manager Approval";
+                    claim.ApprovedById = null; // Not approved yet
+                    claim.ApprovalDate = null;
+                }
             }
             else if (approverRole == UserType.AcademicManager)
             {
+                // Manager can approve any amount
                 claim.Status = "Approved";
                 claim.WorkflowStage = "Manager Approved";
-            }
-            else if (approverRole == UserType.ProgramCoordinator && claim.TotalAmount > 1000)
-            {
-                claim.Status = "Pending Manager Review";
-                claim.WorkflowStage = "Requires Manager Approval";
+                claim.ApprovedById = approvedById;
+                claim.ApprovalDate = DateTime.Now;
             }
 
-            claim.ApprovedById = approvedById;
-            claim.ApprovalDate = DateTime.Now;
             claim.LastUpdated = DateTime.Now;
             claim.Notes = string.IsNullOrEmpty(notes) ? claim.Notes : $"{claim.Notes}\nApproval Notes: {notes}";
 
@@ -291,13 +358,21 @@ namespace PROG6212_POE.Services
                 ClaimId = claimId,
                 Action = "Approval",
                 PerformedById = approvedById,
+                PerformedByName = approver?.FullName ?? "Unknown Approver",
                 PerformedAt = DateTime.Now,
                 Notes = notes,
                 PreviousStatus = previousStatus,
-                NewStatus = claim.Status
+                NewStatus = claim.Status,
+                WorkflowStage = claim.WorkflowStage
             });
 
-            _logger.LogInformation($"Claim {claimId} approved by user {approvedById}. Status: {claim.Status}");
+            _logger.LogInformation($"Claim {claimId} processed by {approverRole}. Status: {claim.Status}, Stage: {claim.WorkflowStage}");
+
+            // Auto-generate invoice if fully approved
+            if (claim.Status == "Approved")
+            {
+                await GenerateInvoiceAsync(claimId);
+            }
 
             return true;
         }
@@ -308,6 +383,8 @@ namespace PROG6212_POE.Services
             if (claim == null) return false;
 
             var previousStatus = claim.Status;
+            var rejecter = await GetUserByIdAsync(rejectedById);
+
             claim.Status = "Rejected";
             claim.WorkflowStage = "Rejected";
             claim.LastUpdated = DateTime.Now;
@@ -320,20 +397,20 @@ namespace PROG6212_POE.Services
                 ClaimId = claimId,
                 Action = "Rejection",
                 PerformedById = rejectedById,
+                PerformedByName = rejecter?.FullName ?? "Unknown Rejecter",
                 PerformedAt = DateTime.Now,
                 Notes = reason,
                 PreviousStatus = previousStatus,
-                NewStatus = claim.Status
+                NewStatus = claim.Status,
+                WorkflowStage = claim.WorkflowStage
             });
 
             _logger.LogInformation($"Claim {claimId} rejected by user {rejectedById}. Reason: {reason}");
-
             return true;
         }
 
         public async Task NotifyCoordinatorAsync(int claimId)
         {
-            // Simulate notification (in real implementation, this would send email/notification)
             var claim = await GetClaimByIdAsync(claimId);
             if (claim != null)
             {
@@ -367,7 +444,6 @@ namespace PROG6212_POE.Services
                     .ToList()
             };
 
-            // Calculate average processing time for approved claims
             var approvedClaims = allClaims.Where(c => c.Status == "Approved" && c.ApprovalDate.HasValue);
             if (approvedClaims.Any())
             {
@@ -391,17 +467,14 @@ namespace PROG6212_POE.Services
 
         public async Task RecordDocumentDownloadAsync(int claimId, int userId)
         {
-            // Record document download
             _logger.LogInformation($"Document for claim {claimId} downloaded by user {userId}");
             await Task.CompletedTask;
         }
 
         public async Task<List<ClaimReport>> GenerateReportsAsync()
         {
-            // Generate automated reports
             var reports = new List<ClaimReport>();
 
-            // Monthly summary report
             var monthlyData = _claims
                 .Where(c => c.Date.Month == DateTime.Now.Month && c.Date.Year == DateTime.Now.Year)
                 .GroupBy(c => c.Status)
@@ -413,7 +486,7 @@ namespace PROG6212_POE.Services
                 Id = _nextReportId++,
                 ReportType = "Monthly Summary",
                 GeneratedDate = DateTime.Now,
-                GeneratedById = 3, // Assuming HR user
+                GeneratedById = 3,
                 ReportData = System.Text.Json.JsonSerializer.Serialize(monthlyData),
                 FileName = $"Monthly_Report_{DateTime.Now:yyyyMMdd}.json"
             };
@@ -429,7 +502,6 @@ namespace PROG6212_POE.Services
             var claim = await GetClaimByIdAsync(claimId);
             if (claim == null) return null;
 
-            // Simulate invoice generation
             var invoiceContent = $@"
                 INVOICE - CLAIM #{claim.Id}
                 ==============================
@@ -442,6 +514,7 @@ namespace PROG6212_POE.Services
                 Status: {claim.Status}
                 Approved By: {claim.ApprovedByName}
                 Approval Date: {claim.ApprovalDate:yyyy-MM-dd}
+                Workflow Stage: {claim.WorkflowStage}
                 ==============================
                 Generated on: {DateTime.Now:yyyy-MM-dd HH:mm:ss}
             ";
@@ -450,12 +523,10 @@ namespace PROG6212_POE.Services
 
             return new Document
             {
-                Id = _nextDocumentId++,
                 FileName = $"Invoice_Claim_{claimId}_{DateTime.Now:yyyyMMdd}.txt",
                 ContentType = "text/plain",
                 FileData = invoiceBytes,
-                FileSize = invoiceBytes.Length,
-                UploadDate = DateTime.Now
+                FileSize = invoiceBytes.Length
             };
         }
 
@@ -464,7 +535,7 @@ namespace PROG6212_POE.Services
             var result = new BulkOperationResult();
             var pendingClaims = await GetPendingClaimsAsync();
 
-            foreach (var claim in pendingClaims.Where(c => c.TotalAmount <= 500)) // Auto-approve small claims
+            foreach (var claim in pendingClaims.Where(c => c.TotalAmount <= 500))
             {
                 var success = await ProcessClaimApprovalAsync(claim.Id, 3, UserType.AcademicManager, "Auto-approved via bulk processing");
                 if (success)
@@ -484,7 +555,6 @@ namespace PROG6212_POE.Services
 
         public async Task<bool> AutoApproveClaimsAsync()
         {
-            // Automated approval for claims meeting certain criteria
             var autoApproveClaims = _claims
                 .Where(c => c.Status == "Pending" &&
                            c.TotalAmount <= 300 &&
@@ -500,7 +570,6 @@ namespace PROG6212_POE.Services
             return autoApproveClaims.Count > 0;
         }
 
-        // Helper method to populate navigation properties
         private Claim PopulateNavigationProperties(Claim claim)
         {
             var lecturer = _users.FirstOrDefault(u => u.Id == claim.LecturerId);
@@ -513,6 +582,14 @@ namespace PROG6212_POE.Services
             }
 
             return claim;
+        }
+
+        private void PopulateWorkflowHistory(Claim claim)
+        {
+            claim.WorkflowHistory = _workflows
+                .Where(w => w.ClaimId == claim.Id)
+                .OrderBy(w => w.PerformedAt)
+                .ToList();
         }
     }
 }

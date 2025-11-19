@@ -7,12 +7,13 @@
 <div class="row mb-4">
     <div class="col">
         <h1>Dashboard</h1>
-        <p class="lead">Welcome, @Model.UserRole.ToString()</p>
+        <p class="lead">Welcome, @Context.Session.GetString("UserName") (@Model.UserRole.ToString())</p>
     </div>
 </div>
 
+<!-- Statistics Cards -->
 <div class="row mb-4">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title text-muted">Total Claims</h5>
@@ -20,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title text-muted">Pending Approval</h5>
@@ -28,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title text-muted">Approved</h5>
@@ -36,8 +37,79 @@
             </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Monthly Total</h5>
+                <h2 class="card-text">R@Model.MonthlyTotal</h2>
+            </div>
+        </div>
+    </div>
 </div>
 
+@if (Model.UserRole == UserType.ProgramCoordinator || Model.UserRole == UserType.AcademicManager)
+{
+    <!-- High Priority Claims -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h5 class="card-title mb-0 text-white">
+                        <i class="fas fa-exclamation-triangle me-2"></i>High Priority Claims
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.HighPriorityClaims != null && Model.HighPriorityClaims.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Lecturer</th>
+                                        <th>Amount</th>
+                                        <th>Priority</th>
+                                        <th>Days Pending</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var claim in Model.HighPriorityClaims)
+                                    {
+                                        var daysPending = (DateTime.Now - claim.CreatedDate).Days;
+                                        <tr>
+                                            <td>@claim.Id</td>
+                                            <td>@claim.Title</td>
+                                            <td>@claim.LecturerName</td>
+                                            <td>R@claim.TotalAmount</td>
+                                            <td>
+                                                <span class="badge @(claim.Priority >= 4 ? "bg-danger" : "bg-warning")">
+                                                    @claim.Priority
+                                                </span>
+                                            </td>
+                                            <td>@daysPending</td>
+                                            <td>
+                                                <a asp-controller="Claims" asp-action="Details" asp-route-id="@claim.Id"
+                                                   class="btn btn-sm btn-outline-primary">Review</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center">No high priority claims at this time</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Recent Claims -->
 <div class="row">
     <div class="col">
         <div class="card">
@@ -55,6 +127,8 @@
                                 <th>Rate</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
+                                <th>Workflow Stage</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,6 +142,13 @@
                                     <td>R@claim.TotalAmount</td>
                                     <td>
                                         <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">@claim.WorkflowStage</small>
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Claims" asp-action="Details" asp-route-id="@claim.Id"
+                                           class="btn btn-sm btn-outline-primary">View Details</a>
                                     </td>
                                 </tr>
                             }
@@ -87,6 +168,7 @@
             "approved" => "bg-success",
             "pending" => "bg-warning",
             "rejected" => "bg-danger",
+            "pending manager review" => "bg-info",
             _ => "bg-secondary"
         };
     }

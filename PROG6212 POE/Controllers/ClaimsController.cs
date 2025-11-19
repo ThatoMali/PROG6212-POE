@@ -76,7 +76,7 @@ namespace PROG6212_POE.Controllers
                     return View(model);
                 }
 
-                // Auto-calculation feature (already implemented in model but verified here)
+                // Auto-calculation feature
                 if (model.HoursWorked <= 0 || model.HourlyRate <= 0)
                 {
                     ModelState.AddModelError("", "Hours worked and hourly rate must be greater than 0.");
@@ -108,11 +108,17 @@ namespace PROG6212_POE.Controllers
                     }
                 }
 
-                // Automated notification (simulated)
+                // Automated notification
                 await _claimService.NotifyCoordinatorAsync(claim.Id);
 
                 _logger.LogInformation($"Claim {claim.Id} submitted successfully by user {userId}");
-                TempData["SuccessMessage"] = $"Claim '{model.Title}' submitted successfully! Claim ID: {claim.Id}. Total Amount: R{model.TotalAmount}";
+
+                // Show smart workflow message
+                string workflowMessage = claim.TotalAmount <= 500 ?
+                    "This claim may be auto-approved (under R500)" :
+                    "This claim requires coordinator approval";
+
+                TempData["SuccessMessage"] = $"Claim '{model.Title}' submitted successfully! Claim ID: {claim.Id}. Total Amount: R{model.TotalAmount}. {workflowMessage}";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -155,17 +161,17 @@ namespace PROG6212_POE.Controllers
                 if (success)
                 {
                     _logger.LogInformation($"Claim {id} approved by user {userId}");
-                    return Json(new { success = true, message = "Claim approved successfully" });
+                    return Json(new { success = true, message = "Claim processed successfully" });
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Failed to approve claim" });
+                    return Json(new { success = false, message = "Failed to process claim" });
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error approving claim {id}");
-                return Json(new { success = false, message = "An error occurred while approving the claim" });
+                return Json(new { success = false, message = "An error occurred while processing the claim" });
             }
         }
 
@@ -199,6 +205,42 @@ namespace PROG6212_POE.Controllers
             }
         }
 
+        // GET: Enhanced Claim Details with Workflow History
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
+        {
+            var claim = await _claimService.GetClaimByIdAsync(id);
+            if (claim == null)
+            {
+                return NotFound();
+            }
+
+            // Check if document exists
+            var document = await _claimService.GetDocumentAsync(id);
+            ViewBag.HasDocument = document != null;
+
+            // Automated audit trail
+            await _claimService.RecordClaimViewAsync(id, HttpContext.Session.GetInt32("UserId") ?? 0);
+
+            return View(claim);
+        }
+
+        // GET: Download document
+        [Authorize]
+        public async Task<IActionResult> DownloadDocument(int claimId)
+        {
+            var document = await _claimService.GetDocumentAsync(claimId);
+            if (document == null || document.FileData == null || document.FileData.Length == 0)
+            {
+                return NotFound();
+            }
+
+            // Automated download tracking
+            await _claimService.RecordDocumentDownloadAsync(claimId, HttpContext.Session.GetInt32("UserId") ?? 0);
+
+            return File(document.FileData, document.ContentType, document.FileName);
+        }
+
         // GET: Automated reports for HR
         [Authorize(Roles = "AcademicManager")]
         public async Task<IActionResult> Reports()
@@ -226,38 +268,6 @@ namespace PROG6212_POE.Controllers
                 _logger.LogError(ex, $"Error generating invoice for claim {claimId}");
                 return Json(new { success = false, message = "An error occurred" });
             }
-        }
-
-        // GET: Claim details with enhanced automation
-        [Authorize]
-        public async Task<IActionResult> Details(int id)
-        {
-            var claim = await _claimService.GetClaimByIdAsync(id);
-            if (claim == null)
-            {
-                return NotFound();
-            }
-
-            // Automated audit trail
-            await _claimService.RecordClaimViewAsync(id, HttpContext.Session.GetInt32("UserId") ?? 0);
-
-            return View(claim);
-        }
-
-        // GET: Download document
-        [Authorize]
-        public async Task<IActionResult> DownloadDocument(int claimId)
-        {
-            var document = await _claimService.GetDocumentAsync(claimId);
-            if (document == null || document.FileData == null || document.FileData.Length == 0)
-            {
-                return NotFound();
-            }
-
-            // Automated download tracking
-            await _claimService.RecordDocumentDownloadAsync(claimId, HttpContext.Session.GetInt32("UserId") ?? 0);
-
-            return File(document.FileData, document.ContentType, document.FileName);
         }
 
         // GET: Bulk actions for HR
