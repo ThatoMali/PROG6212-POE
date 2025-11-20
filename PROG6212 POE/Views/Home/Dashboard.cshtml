@@ -49,7 +49,7 @@
         <div class="card text-center bg-light">
             <div class="card-body">
                 <h5 class="card-title text-muted">Monthly Total</h5>
-                <h2 class="card-text text-success">R@Model.MonthlyTotal.ToString("N2")</h2>
+                <h2 class="card-text text-success">R @Model.MonthlyTotal.ToString("N2")</h2>
                 <small class="text-muted">@currentMonth</small>
             </div>
         </div>
@@ -76,7 +76,7 @@
                     {
                         var approvalRate = ((double)Model.Approved / Model.TotalClaims) * 100;
                         @approvalRate.ToString("F1")
-                    
+
                         <small>%</small>
                     }
                     else
@@ -92,7 +92,7 @@
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title text-muted">All-Time Total</h5>
-                <h2 class="card-text text-info">R@Model.AllTimeTotal.ToString("N2")</h2>
+                <h2 class="card-text text-info">R @Model.AllTimeTotal.ToString("N2")</h2>
                 <small class="text-muted">All claims total</small>
             </div>
         </div>
@@ -140,9 +140,9 @@
                                             </td>
                                             <td>@claim.LecturerName</td>
                                             <td>
-                                                <span class="fw-bold text-success">R@claim.TotalAmount.ToString("N2")</span>
+                                                <span class="fw-bold text-success">R @claim.TotalAmount.ToString("N2")</span>
                                                 <br />
-                                                <small class="text-muted">@claim.HoursWorked h × R@claim.HourlyRate.ToString("N2")/h</small>
+                                                <small class="text-muted">@claim.HoursWorked h × R @claim.HourlyRate.ToString("N2")/h</small>
                                             </td>
                                             <td>
                                                 <span class="badge @(claim.Priority >= 4 ? "bg-danger" : "bg-warning")">
@@ -229,10 +229,10 @@
                                         </td>
                                         <td>@claim.LecturerName</td>
                                         <td>
-                                            <small>@claim.HoursWorked h × R@claim.HourlyRate.ToString("N2")</small>
+                                            <small>@claim.HoursWorked h × R @claim.HourlyRate.ToString("N2")</small>
                                         </td>
                                         <td>
-                                            <span class="fw-bold text-success">R@claim.TotalAmount.ToString("N2")</span>
+                                            <span class="fw-bold text-success">R @claim.TotalAmount.ToString("N2")</span>
                                         </td>
                                         <td>
                                             <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
