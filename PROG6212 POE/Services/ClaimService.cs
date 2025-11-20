@@ -1,7 +1,7 @@
 ﻿using PROG6212_POE.Models;
 using PROG6212_POE.Models.Entities;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Text;
 
 namespace PROG6212_POE.Services
 {
@@ -9,7 +9,6 @@ namespace PROG6212_POE.Services
     {
         private readonly IFileService _fileService;
         private readonly ILogger<ClaimService> _logger;
-        private readonly IWebHostEnvironment _environment;
 
         // In-memory storage
         private static List<User> _users = new List<User>
@@ -28,16 +27,17 @@ namespace PROG6212_POE.Services
 
         private static List<ClaimWorkflow> _workflows = new List<ClaimWorkflow>();
         private static List<ClaimReport> _reports = new List<ClaimReport>();
+        private static List<Invoice> _invoices = new List<Invoice>();
 
         private static int _nextClaimId = 4;
         private static int _nextWorkflowId = 1;
         private static int _nextReportId = 1;
+        private static int _nextInvoiceId = 1;
 
-        public ClaimService(IFileService fileService, ILogger<ClaimService> logger, IWebHostEnvironment environment)
+        public ClaimService(IFileService fileService, ILogger<ClaimService> logger)
         {
-            _fileService = fileService;
-            _logger = logger;
-            _environment = environment;
+            _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             // Initialize some workflow history for demo
             if (!_workflows.Any())
@@ -231,7 +231,12 @@ namespace PROG6212_POE.Services
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await Task.FromResult(_users.FirstOrDefault(u => u.Username == username));
+            if (string.IsNullOrEmpty(username))
+                return null;
+
+            var user = _users.FirstOrDefault(u =>
+                u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+            return await Task.FromResult(user);
         }
 
         public async Task<User> GetUserByIdAsync(int id)
@@ -239,10 +244,35 @@ namespace PROG6212_POE.Services
             return await Task.FromResult(_users.FirstOrDefault(u => u.Id == id));
         }
 
-        // Automation Methods - FIXED SMART APPROVAL WORKFLOW
+        // Automation Methods
         public async Task<ValidationResult> ValidateClaimAsync(ClaimViewModel model, int lecturerId)
         {
             var result = new ValidationResult { IsValid = true };
+
+            // Required field validation
+            if (string.IsNullOrWhiteSpace(model.Title))
+            {
+                result.Errors.Add("Claim title is required.");
+                result.IsValid = false;
+            }
+
+            if (model.HoursWorked <= 0)
+            {
+                result.Errors.Add("Hours worked must be greater than 0.");
+                result.IsValid = false;
+            }
+
+            if (model.HourlyRate <= 0)
+            {
+                result.Errors.Add("Hourly rate must be greater than 0.");
+                result.IsValid = false;
+            }
+
+            if (model.Date > DateTime.Now)
+            {
+                result.Errors.Add("Claim date cannot be in the future.");
+                result.IsValid = false;
+            }
 
             // Business rule validation
             if (model.HoursWorked > 100)
@@ -255,29 +285,40 @@ namespace PROG6212_POE.Services
                 result.Warnings.Add("Hourly rate is above average. May require additional approval.");
             }
 
-            // Check for duplicate claims
+            if (model.HoursWorked * model.HourlyRate > 5000)
+            {
+                result.Warnings.Add("Claim amount exceeds R5000. Will require manager approval.");
+            }
+
+            // Check for duplicate claims (same title and date within 7 days)
             var duplicate = _claims.Any(c =>
                 c.LecturerId == lecturerId &&
                 c.Title.Equals(model.Title, StringComparison.OrdinalIgnoreCase) &&
-                c.Date.Date == model.Date.Date);
+                Math.Abs((c.Date - model.Date).Days) <= 7);
 
             if (duplicate)
             {
-                result.Errors.Add("A claim with similar title and date already exists.");
+                result.Errors.Add("A similar claim was submitted recently. Please check for duplicates.");
                 result.IsValid = false;
             }
 
-            // Monthly limit check
+            // Monthly limit check (R10,000 per month)
             var monthlyTotal = _claims
                 .Where(c => c.LecturerId == lecturerId &&
                            c.Date.Month == model.Date.Month &&
                            c.Date.Year == model.Date.Year)
                 .Sum(c => c.TotalAmount);
 
-            if (monthlyTotal + model.TotalAmount > 10000)
+            if (monthlyTotal + (model.HoursWorked * model.HourlyRate) > 10000)
             {
-                result.Errors.Add("Monthly claim limit exceeded. Please contact coordinator.");
+                result.Errors.Add("Monthly claim limit (R10,000) exceeded. Please contact coordinator.");
                 result.IsValid = false;
+            }
+
+            // Weekend work validation
+            if (model.Date.DayOfWeek == DayOfWeek.Saturday || model.Date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                result.Warnings.Add("Weekend work detected. Please ensure this is authorized.");
             }
 
             return await Task.FromResult(result);
@@ -313,7 +354,7 @@ namespace PROG6212_POE.Services
             var previousStatus = claim.Status;
             var approver = await GetUserByIdAsync(approvedById);
 
-            // FIXED: Smart Approval Workflow
+            // Smart Approval Workflow
             if (approverRole == UserType.ProgramCoordinator)
             {
                 if (claim.TotalAmount <= 500) // Auto-approve small claims
@@ -368,7 +409,7 @@ namespace PROG6212_POE.Services
 
             _logger.LogInformation($"Claim {claimId} processed by {approverRole}. Status: {claim.Status}, Stage: {claim.WorkflowStage}");
 
-            // Auto-generate invoice if fully approved
+            // Auto-generate invoice when claim is approved
             if (claim.Status == "Approved")
             {
                 await GenerateInvoiceAsync(claimId);
@@ -424,35 +465,34 @@ namespace PROG6212_POE.Services
             var allClaims = await GetAllClaimsAsync();
             var userClaims = await GetClaimsByLecturerAsync(userId);
 
-            // FIXED: Calculate monthly total as sum of TotalAmount for CURRENT MONTH only
+            // Calculate monthly total as sum of TotalAmount for CURRENT MONTH only
             var currentMonth = DateTime.Now.Month;
             var currentYear = DateTime.Now.Year;
             var monthlyTotal = allClaims
                 .Where(c => c.Date.Month == currentMonth && c.Date.Year == currentYear)
                 .Sum(c => c.TotalAmount);
 
-            // FIXED: Calculate all-time total separately if needed
+            // Calculate all-time total separately
             var allTimeTotal = allClaims.Sum(c => c.TotalAmount);
 
+            // FIXED: Ensure lists are never null
             var stats = new DashboardStatistics
             {
                 TotalClaims = userRole == UserType.Lecturer ? userClaims.Count : allClaims.Count,
                 PendingClaims = allClaims.Count(c => c.Status == "Pending"),
                 ApprovedClaims = allClaims.Count(c => c.Status == "Approved"),
                 RejectedClaims = allClaims.Count(c => c.Status == "Rejected"),
-                // FIXED: This is now the CURRENT MONTH total
                 MonthlyTotal = monthlyTotal,
+                AllTimeTotal = allTimeTotal,
                 RecentClaims = allClaims
                     .OrderByDescending(c => c.CreatedDate)
                     .Take(5)
-                    .ToList(),
+                    .ToList() ?? new List<Claim>(), // Ensure not null
                 HighPriorityClaims = allClaims
                     .Where(c => c.Status == "Pending" && c.Priority >= 3)
                     .OrderByDescending(c => c.Priority)
                     .Take(5)
-                    .ToList(),
-                // Optional: Add AllTimeTotal if you want both
-                AllTimeTotal = allTimeTotal
+                    .ToList() ?? new List<Claim>() // Ensure not null
             };
 
             // Calculate average processing time for approved claims
@@ -509,37 +549,89 @@ namespace PROG6212_POE.Services
             return await Task.FromResult(reports);
         }
 
-        public async Task<Document> GenerateInvoiceAsync(int claimId)
+        // Invoice Generation Feature
+        public async Task<Invoice> GenerateInvoiceAsync(int claimId)
         {
             var claim = await GetClaimByIdAsync(claimId);
             if (claim == null) return null;
 
+            // Create professional invoice content
             var invoiceContent = $@"
-                INVOICE - CLAIM #{claim.Id}
-                ==============================
+                UNIVERSITY OF TECHNOLOGY - PAYMENT INVOICE
+                ===========================================
+                
+                INVOICE NUMBER: INV-{claimId:D4}
+                INVOICE DATE: {DateTime.Now:dd MMMM yyyy}
+                DUE DATE: {DateTime.Now.AddDays(30):dd MMMM yyyy}
+                
+                BILL TO:
                 Lecturer: {claim.LecturerName}
+                Department: Academic Faculty
+                Email: {_users.FirstOrDefault(u => u.Id == claim.LecturerId)?.Email ?? "N/A"}
+                
+                CLAIM DETAILS:
+                ==============
+                Claim ID: #{claim.Id}
                 Title: {claim.Title}
-                Date: {claim.Date:yyyy-MM-dd}
-                Hours Worked: {claim.HoursWorked}
-                Hourly Rate: R{claim.HourlyRate}
-                Total Amount: R{claim.TotalAmount}
+                Description: {claim.Description ?? "No description provided"}
+                Date of Service: {claim.Date:dd MMMM yyyy}
+                
+                PAYMENT BREAKDOWN:
+                =================
+                Hours Worked: {claim.HoursWorked} hours
+                Hourly Rate: R{claim.HourlyRate:N2}/hour
+                Subtotal: R{(claim.HoursWorked * claim.HourlyRate):N2}
+                
+                TOTAL AMOUNT DUE: R{claim.TotalAmount:N2}
+                
+                APPROVAL INFORMATION:
+                ====================
                 Status: {claim.Status}
-                Approved By: {claim.ApprovedByName}
-                Approval Date: {claim.ApprovalDate:yyyy-MM-dd}
+                Approved By: {claim.ApprovedByName ?? "Pending Approval"}
+                Approval Date: {claim.ApprovalDate?.ToString("dd MMMM yyyy") ?? "N/A"}
                 Workflow Stage: {claim.WorkflowStage}
-                ==============================
-                Generated on: {DateTime.Now:yyyy-MM-dd HH:mm:ss}
+                
+                PAYMENT INSTRUCTIONS:
+                ====================
+                Please process this payment within 30 days of the invoice date.
+                Bank: University Central Bank
+                Account: 123456789
+                Reference: INV-{claimId:D4}-{claim.LecturerName.Replace(" ", "")}
+                
+                ===========================================
+                Generated automatically by Contract Monthly Claim System
+                Generated on: {DateTime.Now:dd MMMM yyyy HH:mm:ss}
             ";
 
-            var invoiceBytes = System.Text.Encoding.UTF8.GetBytes(invoiceContent);
+            var invoiceBytes = Encoding.UTF8.GetBytes(invoiceContent);
 
-            return new Document
+            var invoice = new Invoice
             {
-                FileName = $"Invoice_Claim_{claimId}_{DateTime.Now:yyyyMMdd}.txt",
+                Id = _nextInvoiceId++,
+                ClaimId = claimId,
+                InvoiceNumber = $"INV-{claimId:D4}",
+                GeneratedDate = DateTime.Now,
+                Amount = claim.TotalAmount,
+                Status = "Generated",
+                FileName = $"Invoice_INV-{claimId:D4}_{DateTime.Now:yyyyMMdd}.txt",
                 ContentType = "text/plain",
-                FileData = invoiceBytes,
-                FileSize = invoiceBytes.Length
+                FileData = invoiceBytes
             };
+
+            _invoices.Add(invoice);
+            _logger.LogInformation($"Invoice generated for claim {claimId}: {invoice.InvoiceNumber}");
+
+            return invoice;
+        }
+
+        public async Task<List<Invoice>> GetInvoicesAsync()
+        {
+            return await Task.FromResult(_invoices.OrderByDescending(i => i.GeneratedDate).ToList());
+        }
+
+        public async Task<Invoice> GetInvoiceAsync(int invoiceId)
+        {
+            return await Task.FromResult(_invoices.FirstOrDefault(i => i.Id == invoiceId));
         }
 
         public async Task<BulkOperationResult> ProcessBulkApprovalAsync()
@@ -565,20 +657,24 @@ namespace PROG6212_POE.Services
             return result;
         }
 
+        // Background Auto-Approval Feature
         public async Task<bool> AutoApproveClaimsAsync()
         {
             var autoApproveClaims = _claims
                 .Where(c => c.Status == "Pending" &&
                            c.TotalAmount <= 300 &&
-                           (DateTime.Now - c.CreatedDate).Days >= 1)
+                           (DateTime.Now - c.CreatedDate).TotalHours >= 24 && // At least 24 hours old
+                           !c.Title.ToLower().Contains("urgent") && // Exclude urgent claims
+                           c.HoursWorked <= 40) // Reasonable hours
                 .ToList();
 
             foreach (var claim in autoApproveClaims)
             {
-                await ProcessClaimApprovalAsync(claim.Id, 3, UserType.AcademicManager, "Auto-approved by system");
+                await ProcessClaimApprovalAsync(claim.Id, 3, UserType.AcademicManager, "Auto-approved by system (met criteria)");
+                _logger.LogInformation($"Auto-approved claim {claim.Id} - {claim.Title} for R{claim.TotalAmount}");
             }
 
-            _logger.LogInformation($"Auto-approved {autoApproveClaims.Count} claims");
+            _logger.LogInformation($"Auto-approval completed: {autoApproveClaims.Count} claims approved");
             return autoApproveClaims.Count > 0;
         }
 

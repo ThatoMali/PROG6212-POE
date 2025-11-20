@@ -18,7 +18,7 @@ namespace PROG6212_POE.Services
         Task<User> GetUserByUsernameAsync(string username);
         Task<User> GetUserByIdAsync(int id);
 
-        // New automation methods
+        // Automation methods
         Task<ValidationResult> ValidateClaimAsync(ClaimViewModel model, int lecturerId);
         Task<List<Claim>> PrioritizeClaimsAsync(List<Claim> claims, int userId);
         Task<bool> ProcessClaimApprovalAsync(int claimId, int approvedById, UserType approverRole, string notes = "");
@@ -28,7 +28,9 @@ namespace PROG6212_POE.Services
         Task RecordClaimViewAsync(int claimId, int userId);
         Task RecordDocumentDownloadAsync(int claimId, int userId);
         Task<List<ClaimReport>> GenerateReportsAsync();
-        Task<Document> GenerateInvoiceAsync(int claimId);
+        Task<Invoice> GenerateInvoiceAsync(int claimId);
+        Task<List<Invoice>> GetInvoicesAsync();
+        Task<Invoice> GetInvoiceAsync(int invoiceId);
         Task<BulkOperationResult> ProcessBulkApprovalAsync();
         Task<bool> AutoApproveClaimsAsync();
     }

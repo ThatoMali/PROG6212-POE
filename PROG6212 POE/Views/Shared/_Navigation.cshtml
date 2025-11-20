@@ -28,27 +28,57 @@
             <i class="fas fa-list me-1"></i>All Claims
         </a>
     </li>
+
+    <!-- NEW: Invoices link for managers/coordinators -->
+    @if (userRole == UserType.ProgramCoordinator || userRole == UserType.AcademicManager)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Invoices" asp-action="Index">
+                <i class="fas fa-file-invoice me-1"></i>Invoices
+            </a>
+        </li>
+    }
 </ul>
 
 <ul class="navbar-nav">
+    <!-- Quick Role Switcher for Demo -->
+    <li class="nav-item dropdown me-3">
+        <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="fas fa-random me-1"></i>Switch Role
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item" asp-controller="Account" asp-action="QuickLogin" asp-route-role="lecturer">
+                    <i class="fas fa-chalkboard-teacher me-2"></i>Switch to Lecturer
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-controller="Account" asp-action="QuickLogin" asp-route-role="coordinator">
+                    <i class="fas fa-user-tie me-2"></i>Switch to Coordinator
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-controller="Account" asp-action="QuickLogin" asp-route-role="manager">
+                    <i class="fas fa-user-cog me-2"></i>Switch to Manager
+                </a>
+            </li>
+        </ul>
+    </li>
+
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
             <i class="fas fa-user me-1"></i>@userName (@userRole)
         </a>
         <ul class="dropdown-menu">
             <li>
-                <a class="dropdown-item" asp-controller="Home" asp-action="SwitchRole" asp-route-role="@UserType.Lecturer">
-                    <i class="fas fa-chalkboard-teacher me-2"></i>Switch to Lecturer
-                </a>
+                <span class="dropdown-item-text">
+                    <small>Logged in as: @userName</small>
+                </span>
             </li>
+            <li><hr class="dropdown-divider"></li>
             <li>
-                <a class="dropdown-item" asp-controller="Home" asp-action="SwitchRole" asp-route-role="@UserType.ProgramCoordinator">
-                    <i class="fas fa-user-tie me-2"></i>Switch to Coordinator
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" asp-controller="Home" asp-action="SwitchRole" asp-route-role="@UserType.AcademicManager">
-                    <i class="fas fa-user-cog me-2"></i>Switch to Manager
+                <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
                 </a>
             </li>
         </ul>

@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Dashboard";
     var currentMonth = DateTime.Now.ToString("MMMM yyyy");
+
+    // FIXED: Null checks for collections
+    var highPriorityClaims = Model.HighPriorityClaims ?? new List<Claim>();
+    var recentClaims = Model.RecentClaims ?? new List<Claim>();
 }
 
 <div class="row mb-4">
@@ -104,11 +108,11 @@
                 <div class="card-header bg-warning">
                     <h5 class="card-title mb-0 text-white">
                         <i class="fas fa-exclamation-triangle me-2"></i>High Priority Claims
-                        <span class="badge bg-danger ms-2">@Model.HighPriorityClaims.Count</span>
+                        <span class="badge bg-danger ms-2">@highPriorityClaims.Count</span>
                     </h5>
                 </div>
                 <div class="card-body">
-                    @if (Model.HighPriorityClaims != null && Model.HighPriorityClaims.Any())
+                    @if (highPriorityClaims.Any())
                     {
                         <div class="table-responsive">
                             <table class="table table-sm table-hover">
@@ -125,7 +129,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var claim in Model.HighPriorityClaims)
+                                    @foreach (var claim in highPriorityClaims)
                                     {
                                         var daysPending = (DateTime.Now - claim.CreatedDate).Days;
                                         <tr>
@@ -192,7 +196,7 @@
                 </a>
             </div>
             <div class="card-body">
-                @if (Model.RecentClaims.Any())
+                @if (recentClaims.Any())
                 {
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -209,7 +213,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var claim in Model.RecentClaims)
+                                @foreach (var claim in recentClaims)
                                 {
                                     <tr>
                                         <td>

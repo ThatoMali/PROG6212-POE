@@ -25,27 +25,40 @@ namespace PROG6212_POE.Controllers
         [Authorize]
         public async Task<IActionResult> Dashboard()
         {
-            var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
-            var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
-
-            var allClaims = await _claimService.GetAllClaimsAsync();
-            var userClaims = await _claimService.GetClaimsByLecturerAsync(userId);
-
-            // Automated dashboard statistics
-            var statistics = await _claimService.GetDashboardStatisticsAsync(userId, userRole);
-
-            var model = new DashboardViewModel
+            try
             {
-                UserRole = userRole,
-                TotalClaims = statistics.TotalClaims,
-                PendingApproval = statistics.PendingClaims,
-                Approved = statistics.ApprovedClaims,
-                RecentClaims = statistics.RecentClaims,
-                MonthlyTotal = statistics.MonthlyTotal,
-                AverageProcessingTime = statistics.AverageProcessingTime
-            };
+                var userId = HttpContext.Session.GetInt32("UserId") ?? 1;
+                var userRole = (UserType)(HttpContext.Session.GetInt32("UserRole") ?? (int)UserType.Lecturer);
 
-            return View(model);
+                var statistics = await _claimService.GetDashboardStatisticsAsync(userId, userRole);
+
+                // Ensure no null values in the view model
+                var model = new DashboardViewModel
+                {
+                    UserRole = userRole,
+                    TotalClaims = statistics.TotalClaims,
+                    PendingApproval = statistics.PendingClaims,
+                    Approved = statistics.ApprovedClaims,
+                    MonthlyTotal = statistics.MonthlyTotal,
+                    AllTimeTotal = statistics.AllTimeTotal,
+                    AverageProcessingTime = statistics.AverageProcessingTime,
+                    RecentClaims = statistics.RecentClaims ?? new List<Claim>(),
+                    HighPriorityClaims = statistics.HighPriorityClaims ?? new List<Claim>()
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading dashboard");
+                // Return a safe default model if there's an error
+                return View(new DashboardViewModel
+                {
+                    UserRole = UserType.Lecturer,
+                    RecentClaims = new List<Claim>(),
+                    HighPriorityClaims = new List<Claim>()
+                });
+            }
         }
 
         // Enhanced role switching with automation
