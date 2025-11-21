@@ -1,290 +1,350 @@
-# Contract Monthly Claim System
+# Contract Monthly Claim System - README
 
-## 📋 Project Overview
+##  Project Overview
 
-The **Contract Monthly Claim System** is a comprehensive web application designed for academic institutions to manage monthly contract claims. The system facilitates seamless claim submission by lecturers and provides an efficient approval workflow for program coordinators and academic managers.
+The **Contract Monthly Claim System** is a comprehensive ASP.NET Core MVC web application designed to automate and streamline the claim submission and approval process for academic institutions. The system provides role-based access for lecturers, program coordinators, and academic managers with automated workflows, real-time calculations, and professional invoicing capabilities.
 
-## 🚀 Features
+##  Features
 
 ### Core Functionality
-- **🔐 Role-Based Access Control** - Three user roles with distinct permissions
-- **📝 Claim Submission** - Intuitive form for lecturers to submit monthly claims
-- **✅ Claim Management** - Approval workflow for coordinators and managers
-- **📎 Document Upload** - Secure file attachment system for supporting documents
-- **📊 Status Tracking** - Real-time claim status updates and transparency
-- **📱 Responsive Design** - Mobile-friendly interface using Bootstrap 5
+- **User Authentication & Authorization** - Secure role-based access control
+- **Claim Management** - Complete lifecycle from submission to approval
+- **Document Handling** - File upload and management support
+- **Real-time Calculations** - Automatic amount calculations
+- **Dashboard Analytics** - Comprehensive statistics and reporting
 
-### User Roles & Permissions
+### Automation Features
+- **Smart Approval Workflow** - Automated routing based on claim amounts
+- **Background Auto-Approval** - Scheduled processing of eligible claims
+- **Automated Validation** - Business rule enforcement and duplicate detection
+- **Invoice Generation** - Professional invoice creation upon approval
 
-| Role | Permissions |
-|------|-------------|
-| **Lecturer** | Submit claims, View own claims, Upload documents, Track status |
-| **Program Coordinator** | View all claims, Approve/Reject claims, Manage workflow |
-| **Academic Manager** | View all claims, Approve/Reject claims, Oversee process |
+### User Roles
+- **Lecturer** - Submit claims, view personal history, track status
+- **Program Coordinator** - Approve claims (up to R1000), manage workflows
+- **Academic Manager** - Full system access, bulk operations, reporting
 
-## 🛠 Technology Stack
+##  Technology Stack
 
 ### Backend
-- **Framework**: ASP.NET Core MVC 6.0
-- **Language**: C#
-- **Architecture**: MVC Pattern with Service Layer
+- **ASP.NET Core 6.0 MVC** - Web framework
+- **C#** - Programming language
+- **Dependency Injection** - Service management
+- **Session Management** - User state management
+- **Background Services** - Automated processing
 
 ### Frontend
-- **UI Framework**: Bootstrap 5.1.3
-- **Icons**: Font Awesome 6.0
-- **JavaScript**: jQuery 3.6.0
-- **Styling**: Custom CSS3
+- **Bootstrap 5.1.3** - Responsive UI framework
+- **jQuery** - Client-side interactions
+- **Font Awesome** - Icons
+- **JavaScript** - Real-time features
+- **Razor Pages** - Server-side rendering
 
-### Testing
-- **Testing Framework**: xUnit
-- **Mocking Framework**: Moq
-- **Test Runner**: .NET Core Test SDK
+### Security
+- **Authentication Cookies** - Secure login
+- **Role-based Authorization** - Access control
+- **Input Validation** - Data integrity
+- **Anti-forgery Tokens** - CSRF protection
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
-PROG6212 POE/
-├── Controllers/          # MVC Controllers
-│   ├── HomeController.cs
-│   ├── AccountController.cs
-│   └── ClaimsController.cs
-├── Models/              # Data Models and ViewModels
-│   ├── Entities/        # Domain Entities
-│   │   ├── User.cs
+PROG6212_POE/
+├── Controllers/
+│   ├── AccountController.cs      # Authentication & login
+│   ├── ClaimsController.cs       # Claim management
+│   ├── HomeController.cs         # Dashboard & navigation
+│   └── InvoicesController.cs     # Invoice management
+├── Models/
+│   ├── Entities/                 # Data models
 │   │   ├── Claim.cs
-│   │   └── Document.cs
-│   ├── ViewModels/      # View Models
+│   │   ├── User.cs
+│   │   ├── Document.cs
+│   │   ├── Invoice.cs
+│   │   └── ClaimWorkflow.cs
+│   ├── ViewModels/               # View models
 │   │   ├── LoginViewModel.cs
 │   │   ├── ClaimViewModel.cs
 │   │   └── DashboardViewModel.cs
-├── Services/            # Business Logic Layer
-│   ├── IClaimService.cs
-│   ├── ClaimService.cs
-│   └── FileService.cs
-├── Views/               # Razor Views
-│   ├── Shared/
-│   │   ├── _Layout.cshtml
-│   │   ├── _Navigation.cshtml
-│   │   └── _ViewImports.cshtml
-│   ├── Home/
-│   │   ├── Index.cshtml
-│   │   └── Dashboard.cshtml
+│   └── Services/                 # Business logic
+├── Services/
+│   ├── IClaimService.cs          # Claim service interface
+│   ├── ClaimService.cs           # Claim service implementation
+│   ├── IFileService.cs           # File service interface
+│   ├── FileService.cs            # File service implementation
+│   └── ClaimAutomationService.cs # Background service
+├── Views/                        # UI templates
 │   ├── Account/
-│   │   └── Login.cshtml
-│   └── Claims/
-│       ├── Index.cshtml
-│       ├── Submit.cshtml
-│       ├── Details.cshtml
-│       └── Manage.cshtml
-├── Tests/               # Unit Tests
-│   ├── ClaimServiceTests.cs
-│   ├── FileServiceTests.cs
-│   └── ClaimsControllerTests.cs
-├── wwwroot/             # Static Files
-│   ├── css/
-│   │   └── site.css
-│   ├── js/
-│   │   └── site.js
-│   └── uploads/
-├── Program.cs           # Application Entry Point
-└── README.md
+│   ├── Claims/
+│   ├── Home/
+│   └── Shared/
+└── Program.cs                    # Application entry point
 ```
 
-## 🚀 Quick Start
+##  Installation & Setup
 
 ### Prerequisites
 - .NET 6.0 SDK or later
-- Visual Studio 2022 / VS Code / Any .NET IDE
+- Visual Studio 2022 or VS Code
 - Web browser with JavaScript enabled
 
-### Installation & Running
+### Steps
+1. **Clone or download** the project files
+2. **Open the solution** in Visual Studio
+3. **Restore NuGet packages** if necessary
+4. **Build the solution** (Ctrl+Shift+B)
+5. **Run the application** (F5)
 
-1. **Clone the Repository**
-   ```bash
-   git clone <repository-url>
-   cd "PROG6212 POE"
-   ```
+### Configuration
+The application uses in-memory data storage for demonstration purposes. No database configuration is required.
 
-2. **Restore Dependencies**
-   ```bash
-   dotnet restore
-   ```
+##  User Credentials
 
-3. **Run the Application**
-   ```bash
-   dotnet run
-   ```
+### Demo Accounts
+| Role | Username | Password | Access Level |
+|------|----------|----------|-------------|
+| Lecturer | `lecturer1` | `password` | Basic claim submission |
+| Program Coordinator | `coordinator1` | `password` | Claim management & approval |
+| Academic Manager | `manager1` | `password` | Full system access |
 
-4. **Access the Application**
-   - Open browser and navigate to: `https://localhost:7000` or `http://localhost:5000`
-   - The application starts directly on the Dashboard (no login required for demo)
+### Quick Login
+Use the quick login buttons on the login page for instant access to any role.
 
-### Demo Credentials (if login enabled)
+##  Key Features Explained
 
-| Role | Username | Password | Access |
-|------|----------|----------|---------|
-| Lecturer | `lecturer1` | `password` | Submit & view claims |
-| Program Coordinator | `coordinator1` | `password` | Approve claims |
-| Academic Manager | `manager1` | `password` | Approve claims |
-
-## 💡 Usage Guide
-
-### For Lecturers
-1. **Submit a Claim**
-   - Navigate to "Submit Claim"
-   - Fill in claim details (title, hours, rate, date)
-   - Upload supporting documents (optional)
-   - Submit with one click
-
-2. **Track Claims**
-   - View "My Claims" to see status
-   - Monitor approval progress
-   - Download submitted documents
-
-### For Coordinators/Managers
-1. **Review Claims**
-   - Access "Manage Claims" dashboard
-   - View all pending claims with full details
-   - See claim amounts and supporting information
-
-2. **Approve/Reject**
-   - Use one-click approve/reject buttons
-   - Real-time status updates
-   - Transparent audit trail
-
-## 🧪 Testing
-
-### Running Unit Tests
-```bash
-# Run all tests
-dotnet test
-
-# Run with detailed output
-dotnet test --logger "console;verbosity=detailed"
-
-# Run specific test project
-dotnet test PROG6212\ POE.Tests.csproj
+### 1. Smart Approval Workflow
+```csharp
+// Automated routing based on claim amount
+if (claim.TotalAmount <= 500) {
+    // Auto-approve by Coordinator
+} else if (claim.TotalAmount <= 1000) {
+    // Coordinator approval required
+} else {
+    // Manager approval required
+}
 ```
 
-### Test Coverage
-- **Service Layer**: Claim creation, status updates, file handling
-- **Business Logic**: Calculations, validations, workflows
-- **Controllers**: HTTP endpoints, session management
-- **File Handling**: Upload validation, type restrictions
+### 2. Background Auto-Approval
+- Runs every 5 minutes
+- Processes claims meeting criteria:
+  - Amount ≤ R300
+  - At least 24 hours old
+  - Not marked "urgent"
+  - Hours ≤ 40
 
-## ⚙️ Configuration
+### 3. Automated Validation
+```csharp
+public async Task<ValidationResult> ValidateClaimAsync(ClaimViewModel model, int lecturerId)
+{
+    // Business rules validation
+    // Monthly limits, duplicates, weekend work, etc.
+}
+```
 
-### File Upload Settings
-- **Max File Size**: 5MB
-- **Allowed Formats**: PDF, DOCX, XLSX, JPG, PNG
-- **Storage**: In-memory (for demo purposes)
+### 4. Invoice Generation
+- Automatic generation upon claim approval
+- Professional formatting with payment details
+- Downloadable in text format
+- Unique invoice numbering
 
-### Session Configuration
-- **Timeout**: 30 minutes
-- **Storage**: In-memory session
-- **Auto-login**: Enabled for demo mode
+##  Workflow Process
 
-## 🔧 Development
+### Claim Lifecycle
+1. **Submission** → Lecturer submits claim with details and documents
+2. **Validation** → System validates against business rules
+3. **Routing** → Automated routing based on amount
+4. **Approval** → Coordinator/Manager reviews and approves
+5. **Invoicing** → System generates professional invoice
+6. **Completion** → Claim marked as processed
 
-### Adding New Features
-1. Create appropriate ViewModel in `Models/ViewModels/`
-2. Implement service logic in `Services/`
-3. Add controller actions in relevant controller
-4. Create/update views in `Views/`
-5. Write unit tests in `Tests/`
+### Status Transitions
+```
+Pending → Approved/Rejected
+Pending → Pending Manager Review → Approved/Rejected
+```
 
-### Data Storage
-- **Current**: In-memory storage (volatile)
-- **Production Ready**: Easy to switch to Entity Framework with SQL Server
+##  Dashboard Features
 
-### Key Design Patterns
-- **MVC Architecture** - Separation of concerns
-- **Service Layer** - Business logic abstraction
-- **Repository Pattern** - Data access abstraction
-- **Dependency Injection** - Loose coupling
+### Statistical Overview
+- Total claims count
+- Pending approval count
+- Approved claims count
+- Monthly and all-time totals
+- Average processing time
+- Approval rate percentage
 
-## 🐛 Troubleshooting
+### Role-Specific Views
+- **Lecturers**: Personal claim statistics
+- **Coordinators**: High-priority claims and pending reviews
+- **Managers**: Comprehensive system overview and reporting
+
+##  Testing the Application
+
+### Test Scenarios
+
+#### 1. Basic Claim Submission
+```
+1. Login as Lecturer (lecturer1/password)
+2. Navigate to "Submit Claim"
+3. Fill in claim details:
+   - Title: "Research Materials"
+   - Hours: 10
+   - Rate: R150
+   - Date: Current date
+4. Submit and verify success message
+```
+
+#### 2. Automated Approval Testing
+```
+1. Submit claim with R250 total
+2. Wait 5 minutes (background service)
+3. Check claim status - should be auto-approved
+4. Verify invoice generation
+```
+
+#### 3. Coordinator Workflow
+```
+1. Login as Coordinator (coordinator1/password)
+2. Go to "Manage Claims"
+3. Review pending claims
+4. Approve/Reject with notes
+5. Verify status updates
+```
+
+#### 4. Manager Operations
+```
+1. Login as Manager (manager1/password)
+2. Access all system features
+3. Generate reports
+4. Process bulk approvals
+5. View system statistics
+```
+
+## Code Architecture
+
+### Service Layer Pattern
+```csharp
+public interface IClaimService
+{
+    Task<List<Claim>> GetAllClaimsAsync();
+    Task<Claim> CreateClaimAsync(ClaimViewModel model, int lecturerId);
+    // ... other methods
+}
+
+public class ClaimService : IClaimService
+{
+    // Implementation with business logic
+}
+```
+
+### Dependency Injection
+```csharp
+// Program.cs
+builder.Services.AddScoped<IClaimService, ClaimService>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddHostedService<ClaimAutomationService>();
+```
+
+### Model-View-ViewModel (MVVM)
+- **Models**: Data entities and business objects
+- **ViewModels**: UI-specific data representations
+- **Views**: Razor templates for presentation
+
+## Security Features
+
+### Authentication & Authorization
+```csharp
+[Authorize(Roles = "ProgramCoordinator,AcademicManager")]
+public async Task<IActionResult> Manage()
+{
+    // Controller actions protected by role authorization
+}
+```
+
+### Input Validation
+```csharp
+[Required(ErrorMessage = "Claim title is required")]
+[StringLength(200, ErrorMessage = "Title cannot exceed 200 characters")]
+public string Title { get; set; }
+```
+
+### Session Management
+```csharp
+HttpContext.Session.SetInt32("UserId", user.Id);
+HttpContext.Session.SetInt32("UserRole", (int)user.Role);
+```
+
+## Business Rules
+
+### Validation Rules
+- **Monthly Limit**: R10,000 per lecturer
+- **Maximum Hours**: 100 hours per claim
+- **Rate Range**: R10 - R500 per hour
+- **Future Dates**: Claims cannot have future dates
+- **Duplicate Prevention**: Similar claims within 7 days blocked
+
+### Approval Thresholds
+- **Auto-approval**: ≤ R300 (by Coordinator)
+- **Coordinator Approval**: ≤ R1000
+- **Manager Approval**: > R1000
+
+## Troubleshooting
 
 ### Common Issues
 
-1. **Claim Submission Fails**
-   - Check browser console for JavaScript errors
-   - Verify all required fields are filled
-   - Ensure file size and type comply with limits
+#### 1. Login Problems
+- **Issue**: Cannot login as coordinator/manager
+- **Solution**: Use quick login buttons or verify credentials
 
-2. **Styling Not Loading**
-   - Clear browser cache (Ctrl+F5)
-   - Check if Bootstrap CDN is accessible
-   - Verify static files are enabled in Program.cs
+#### 2. Null Reference Exceptions
+- **Issue**: Dashboard shows errors
+- **Solution**: Collections are now properly initialized
 
-3. **Session Issues**
-   - Application restarts clear in-memory data
-   - Use browser refresh to reinitialize demo data
+#### 3. File Upload Issues
+- **Issue**: Document upload fails
+- **Solution**: Check file size (max 5MB) and type (PDF, DOCX, etc.)
 
-### Debug Mode
-Add debug information to any view:
-```html
-<div class="alert alert-info">
-    <strong>Debug Info:</strong><br>
-    UserId: @Context.Session.GetInt32("UserId")<br>
-    UserRole: @Context.Session.GetInt32("UserRole")<br>
-    UserName: @Context.Session.GetString("UserName")
-</div>
-```
+#### 4. Auto-approval Not Working
+- **Issue**: Claims not auto-approved
+- **Solution**: Wait 5 minutes for background service or check criteria
 
-## 📈 Future Enhancements
+### Debugging Tips
+1. Check browser console for JavaScript errors
+2. Verify session values in browser developer tools
+3. Review application logs for server-side errors
+4. Test with different user roles
+
+##  Future Enhancements
 
 ### Planned Features
-- [ ] Database persistence with SQL Server
-- [ ] Email notifications for status changes
-- [ ] Advanced reporting and analytics
-- [ ] Bulk claim operations
-- [ ] Audit logging system
-- [ ] Multi-language support
-- [ ] API for third-party integrations
+- **Email Notifications** - Automated status updates
+- **Database Persistence** - SQL Server integration
+- **Advanced Reporting** - Custom report builder
+- **Mobile Application** - Native mobile support
+- **API Endpoints** - REST API for integrations
+- **Advanced Analytics** - Predictive insights and trends
 
 ### Technical Improvements
-- [ ] Implement proper authentication
-- [ ] Add password hashing
-- [ ] Database migrations
-- [ ] Caching layer
-- [ ] Performance optimization
+- **Caching** - Performance optimization
+- **Unit Testing** - Comprehensive test coverage
+- **Docker Support** - Containerization
+- **CI/CD Pipeline** - Automated deployment
 
-## 🤝 Contributing
+##  Support & Contact
 
-### Development Process
-1. Fork the repository
-2. Create a feature branch
-3. Implement changes with tests
-4. Submit pull request
+### Getting Help
+- Review this README for common solutions
+- Check the code comments for implementation details
+- Test with provided demo credentials
 
-### Code Standards
-- Follow C# coding conventions
-- Include XML documentation
-- Write comprehensive unit tests
-- Update README for new features
+### Development Team
+- **Course**: PROG6212
+- **Institution**: IIE MSA
+- **Academic Year**: 2025
 
-## 📄 License
+##  License
 
-This project is developed as part of **PROG6212 POE (Professional Practice Project)** for academic purposes.
-
-## 🆘 Support
-
-For technical support or questions:
-1. Check the troubleshooting section above
-2. Review the code documentation
-3. Contact the development team
-
-## 🎯 Academic Context
-
-This project demonstrates:
-- **MVC Architecture** implementation
-- **Role-Based Access Control** systems
-- **File Upload** and validation
-- **Unit Testing** methodologies
-- **Software Development** best practices
+This project is developed for academic purposes as part of the PROG6212 Portfolio of Evidence submission.
 
 ---
-
-**PROG6212 POE - Contract Monthly Claim System**  
-*Academic Year 2025 - Professional Practice Project*
+*Last Updated: November 2025*
