@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\submit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\submit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\invoices\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\invoices\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\manage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\manage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -23,32 +43,12 @@
       "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\invoices\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\invoices\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\submit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\submit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\manage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\manage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\claims\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|solutionrelative:views\\claims\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{58B1D624-D6B0-418E-96A3-19CA8F87F054}|PROG6212 POE.csproj|c:\\users\\lab_services_student\\desktop\\prog6212-poe\\prog6212 poe\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -137,7 +137,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -149,85 +149,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-20T19:43:46.417Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAuwEUAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T23:26:28.545Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Invoices\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Invoices\\Index.cshtml",
               "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Invoices\\Index.cshtml",
               "RelativeToolTip": "Views\\Invoices\\Index.cshtml",
-              "ViewState": "AgIAACgAAAAAAAAAAAAuwE8AAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAARJmZmZkewDEAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-20T23:21:22.509Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Privacy.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Privacy.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Privacy.cshtml",
-              "RelativeToolTip": "Views\\Home\\Privacy.cshtml",
-              "ViewState": "AgIAAAAAAAAAMzMzMzPbvwUAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T23:19:29.954Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T23:18:51.824Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "Dashboard.cshtml",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Dashboard.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Dashboard.cshtml",
               "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Dashboard.cshtml",
               "RelativeToolTip": "Views\\Home\\Dashboard.cshtml",
-              "ViewState": "AgIAAOMAAACAgQAAAMAtwOoAAABRAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAANs3MzMwnwOoAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-20T23:01:01.786Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "_Navigation.cshtml",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Shared\\_Navigation.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Navigation.cshtml",
@@ -235,12 +183,111 @@
               "RelativeToolTip": "Views\\Shared\\_Navigation.cshtml",
               "ViewState": "AgIAAC4AAAAAAAAAAAAuwFUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T23:27:09.826Z",
+              "WhenOpened": "2025-11-20T23:27:09.826Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Manage.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
+              "RelativeDocumentMoniker": "Views\\Claims\\Manage.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
+              "RelativeToolTip": "Views\\Claims\\Manage.cshtml",
+              "ViewState": "AgIAADcAAAAAxGVmZmYEwDYAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T22:59:38.449Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Claims\\Details.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Details.cshtml",
+              "RelativeToolTip": "Views\\Claims\\Details.cshtml",
+              "ViewState": "AgIAACQBAAAA5jMzM7MiwLgBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T22:56:55.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Claims\\Index.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Index.cshtml",
+              "RelativeToolTip": "Views\\Claims\\Index.cshtml",
+              "ViewState": "AgIAAB0AAAAAMTMzMzMbwCgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T22:58:55.371Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Submit.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Submit.cshtml",
+              "RelativeDocumentMoniker": "Views\\Claims\\Submit.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Submit.cshtml",
+              "RelativeToolTip": "Views\\Claims\\Submit.cshtml",
+              "ViewState": "AgIAANAAAAAAAAAAAAAQwOEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T23:00:06.643Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T23:18:51.824Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "Views\\Home\\Privacy.cshtml",
+              "ViewState": "AgIAAAAAAAAAMzMzMzPbvwUAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T23:19:29.954Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAuwEUAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T23:26:28.545Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-20T19:43:46.417Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -248,60 +295,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAAAEEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T19:39:55.249Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Submit.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Submit.cshtml",
-              "RelativeDocumentMoniker": "Views\\Claims\\Submit.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Submit.cshtml",
-              "RelativeToolTip": "Views\\Claims\\Submit.cshtml",
-              "ViewState": "AgIAALoAAAAAAAAAAAAuwOEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T23:00:06.643Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Manage.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
-              "RelativeDocumentMoniker": "Views\\Claims\\Manage.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Manage.cshtml",
-              "RelativeToolTip": "Views\\Claims\\Manage.cshtml",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAuwIgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T22:59:38.449Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Claims\\Index.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Index.cshtml",
-              "RelativeToolTip": "Views\\Claims\\Index.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAuwEIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T22:58:55.371Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Details.cshtml",
-              "RelativeDocumentMoniker": "Views\\Claims\\Details.cshtml",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\PROG6212-POE\\PROG6212 POE\\Views\\Claims\\Details.cshtml",
-              "RelativeToolTip": "Views\\Claims\\Details.cshtml",
-              "ViewState": "AgIAAJEBAAAAAAAAAAAuwLgBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T22:56:55.438Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T19:39:55.249Z"
             },
             {
               "$type": "Document",
@@ -313,8 +307,7 @@
               "RelativeToolTip": "Views\\Account\\Login.cshtml",
               "ViewState": "AgIAAGcAAAAAAAAAAAAuwI4AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T22:55:39.439Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T22:55:39.439Z"
             },
             {
               "$type": "Document",
@@ -326,8 +319,7 @@
               "RelativeToolTip": "Services\\IFileService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T22:51:50.465Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T22:51:50.465Z"
             },
             {
               "$type": "Document",
@@ -339,8 +331,7 @@
               "RelativeToolTip": "Services\\IClaimService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T22:51:21.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T22:51:21.058Z"
             },
             {
               "$type": "Document",
@@ -352,8 +343,7 @@
               "RelativeToolTip": "Services\\ClaimService.cs",
               "ViewState": "AgIAAJgCAAAAAAAAAAAAAL4CAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:45:15.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:45:15.31Z"
             },
             {
               "$type": "Document",
@@ -365,8 +355,7 @@
               "RelativeToolTip": "Services\\FileService.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAAAEoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:45:49.642Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:45:49.642Z"
             },
             {
               "$type": "Document",
@@ -378,8 +367,7 @@
               "RelativeToolTip": "Services\\ClaimAutomationService.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAACsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T22:48:53.77Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T22:48:53.77Z"
             },
             {
               "$type": "Document",
@@ -391,8 +379,7 @@
               "RelativeToolTip": "Models\\ErrorViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:43:18.902Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:43:18.902Z"
             },
             {
               "$type": "Document",
@@ -404,8 +391,7 @@
               "RelativeToolTip": "Models\\LoginViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:43:28.944Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:43:28.944Z"
             },
             {
               "$type": "Document",
@@ -417,8 +403,7 @@
               "RelativeToolTip": "Models\\DashboardViewModel.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAqwDAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:42:41.643Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:42:41.643Z"
             },
             {
               "$type": "Document",
@@ -430,8 +415,7 @@
               "RelativeToolTip": "Models\\ClaimViewModel.cs",
               "ViewState": "AgIAABsAAADAmZmZmbkwwDEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:42:19.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:42:19.984Z"
             },
             {
               "$type": "Document",
@@ -443,8 +427,7 @@
               "RelativeToolTip": "Models\\Data\\Entities\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAwCIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:41:55.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:41:55.513Z"
             },
             {
               "$type": "Document",
@@ -456,8 +439,7 @@
               "RelativeToolTip": "Models\\Data\\Entities\\Invoice.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T22:34:59.931Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T22:34:59.931Z"
             },
             {
               "$type": "Document",
@@ -469,8 +451,7 @@
               "RelativeToolTip": "Models\\Data\\Entities\\Claim.cs",
               "ViewState": "AgIAADUAAAAAAAAAAAAAAFsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T19:44:13.956Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T19:44:13.956Z"
             },
             {
               "$type": "Document",
@@ -482,8 +463,7 @@
               "RelativeToolTip": "Models\\Data\\Entities\\Document.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:40:50.404Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:40:50.404Z"
             },
             {
               "$type": "Document",
@@ -495,8 +475,7 @@
               "RelativeToolTip": "Extensions\\StringExtensions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:40:04.371Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:40:04.371Z"
             },
             {
               "$type": "Document",
@@ -508,8 +487,7 @@
               "RelativeToolTip": "Controllers\\InvoicesController.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAAAEkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T22:30:31.65Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T22:30:31.65Z"
             },
             {
               "$type": "Document",
@@ -521,8 +499,7 @@
               "RelativeToolTip": "Controllers\\ClaimsController.cs",
               "ViewState": "AgIAANIAAAAAAAAAAAAawBwBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:38:59.424Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:38:59.424Z"
             },
             {
               "$type": "Document",
@@ -534,8 +511,7 @@
               "RelativeToolTip": "Controllers\\HomeController.cs",
               "ViewState": "AgIAADoAAAAAAAAAAAAAAGAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:39:31.169Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:39:31.169Z"
             },
             {
               "$type": "Document",
@@ -547,8 +523,7 @@
               "RelativeToolTip": "Controllers\\AccountController.cs",
               "ViewState": "AgIAAHAAAAAAAAAAAAAqwJYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T20:37:54.23Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T20:37:54.23Z"
             },
             {
               "$type": "Document",

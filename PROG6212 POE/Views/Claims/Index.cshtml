@@ -37,8 +37,8 @@
                             <td>@claim.Title</td>
                             <td>@claim.Date.ToString("dd MMM yyyy")</td>
                             <td>@claim.HoursWorked</td>
-                            <td>R@claim.HourlyRate.ToString("N2")</td> <!-- FIXED: Added .ToString("N2") -->
-                            <td>R@claim.TotalAmount.ToString("N2")</td> <!-- FIXED: Added .ToString("N2") -->
+                            <td>R @claim.HourlyRate.ToString("N2")</td> <!-- FIXED: Added .ToString("N2") -->
+                            <td>R @claim.TotalAmount.ToString("N2")</td> <!-- FIXED: Added .ToString("N2") -->
                             <td>
                                 <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
                             </td>
